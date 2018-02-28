@@ -13,17 +13,21 @@
           <li><a href="">fb</a></li>
         </ul>
       </nav>
+
+
+
     </div>
   </div>
+
   <div class="row">
-    <div class="col-sm-2 img-left">
-      <button class="btn btn-nav">&lt;</button>
+    <div class="col-sm-3 img-left"  [ngStyle]="setPrevPhoto()">
+      <button class="btn btn-nav-left btn-primary" (click)="clickedLeft()">&lt;</button>
     </div>
-    <div class="col-sm-8">
-      <img src="/assets/tmp-photo.jpg" class="img-fluid">
+    <div class="col-sm-6">
+      <img [src]="currentPhotoUrl" class="img-fluid photo">
     </div>
-    <div class="col-sm-2 img-right">
-      <button class="btn btn-nav">&gt;</button>
+    <div class="col-sm-3 img-right" [ngStyle]="setNextPhoto()">
+      <button class="btn btn-nav-right btn-primary" (click)="clickedRight()">&gt;</button>
     </div>
   </div>
   <div class="row timeline">

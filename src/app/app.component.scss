@@ -11,6 +11,10 @@ nav {
   }
 }
 
+.img-left, .img-right {
+  text-align: center;
+}
+
 .img-left:before, .img-right:before {
   content: '';
   display: inline-block;
@@ -18,12 +22,45 @@ nav {
   height: 100%;
 }
 
+
 .timeline {
   background: #e5e5e5;
 }
 
 .footer {
-  background: #d1d1d1;
+  background: blue;
+  background-color: rgba(0, 0, 0, 0.6);
 }
+
+.photo {
+  width: 100%;
+}
+
+.img-left, .img-right {
+  background-size: cover;
+  opacity: .4;
+}
+
+.img-left {
+  background-position-x: right;
+}
+
+.img-right {
+  background-position-x: left;
+}
+
+.btn-nav-left, .btn-nav-right {
+  color: #fff;
+  font-weight: bold;
+  font-size: 3em;
+}
+
+.btn-nav-left {
+}
+
+.btn-nav-right {
+}
+
+
 
 
