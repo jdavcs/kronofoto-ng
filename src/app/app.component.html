@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
   <div class="row header1">
     <div class="col-sm-3">
@@ -6,33 +7,17 @@
     <div class="col-sm-9">
       <nav class="main">
         <ul>
-          <li><a href="">Home</a></li>
-          <li><a href="">Browse</a></li>
-          <li><a href="">News</a></li>
-          <li><a href="">About</a></li>
-          <li><a href="">fb</a></li>
+          <li><a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="">Home</a></li>
+          <li><a routerLinkActive="active" routerLink="/items">Items</a></li>
+          <li><a routerLinkActive="active" routerLink="/collections">Collections</a></li>
+          <li><a routerLinkActive="active" routerLink="/donors">Donors</a></li>
         </ul>
       </nav>
-
-
-
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-sm-3 img-left"  [ngStyle]="setPrevPhoto()">
-      <button class="btn btn-nav-left btn-primary" (click)="clickedLeft()">&lt;</button>
-    </div>
-    <div class="col-sm-6">
-      <img [src]="currentPhotoUrl" class="img-fluid photo">
-    </div>
-    <div class="col-sm-3 img-right" [ngStyle]="setNextPhoto()">
-      <button class="btn btn-nav-right btn-primary" (click)="clickedRight()">&gt;</button>
-    </div>
-  </div>
-  <div class="row timeline">
-    <div class="col-sm-12">timeline</div>
-  </div>
+<router-outlet></router-outlet>
+
   <div class="row footer">
     <div class="col-sm-12">footer</div>
   </div>
