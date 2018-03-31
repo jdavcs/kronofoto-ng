@@ -5,7 +5,7 @@ import { PhotoService } from '../photo.service';
   templateUrl: './item-list.component.html'
 })
 export class ItemListComponent {
-  items: string;
+  items;
 
 
   constructor(private photoService: PhotoService) {
@@ -15,7 +15,7 @@ export class ItemListComponent {
   private initItems()
   {
     this.photoService.getItems()
-      .subscribe(data => this.items = data;
+      .subscribe(data => this.items = data);
   }
 }
 

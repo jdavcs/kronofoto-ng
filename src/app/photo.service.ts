@@ -27,7 +27,8 @@ export class PhotoService {
 
   //geet this from your api
   getItems() {
-    const url: string = 'http://localhost:8001/items?sort=year_min&filter[before]=1900&limit=50';
+    //const url: string = 'http://localhost:8001/items?sort=year_min&filter[before]=1900&limit=50';
+    const url: string = '/api/items?sort=year_min&filter[before]=1900&limit=50';
 
     return this.http.get(url);
   }
