@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 
 import { PhotoService } from './photo.service';
+import { CollectionService } from './collections/collection.service';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import { PhotoService } from './photo.service';
     HomeComponent,
     PageNotFoundComponent
   ],
-  providers: [PhotoService],
+  providers: [PhotoService, CollectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
