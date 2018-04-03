@@ -46,7 +46,7 @@ describe('CollectionService', () => {
   it('should be created', () => {
     expect(collectionService).toBeTruthy();
   });
-
+  
   it('should return a Collection object (http GET/called once)', () => {
     const expected: Collection = sampleCollection;
     const fakeId = 42;
@@ -56,7 +56,7 @@ describe('CollectionService', () => {
       fail
     );
 
-    const url = CollectionService.readUrl + fakeId;
+    const url = CollectionService.readUrl + '/' + fakeId;
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
     req.flush(expected);

@@ -6,14 +6,13 @@ import { Collection } from './collection';
 
 @Injectable()
 export class CollectionService {
-  static readUrl: string = '/api/collections/';
+  static readUrl: string = '/api/collections';
 
   constructor(private http: HttpClient) { 
   }
 
   getCollection(id: number|string): Observable<Collection> {
-    const url = CollectionService.readUrl + id;
-    //<Collection> type parameter gets a typed return object.
+    const url = CollectionService.readUrl + '/' + id;
     return this.http.get<Collection>(url);
   }
 

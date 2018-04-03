@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 
 import { PhotoService } from './photo.service';
-import { CollectionService } from './collections/collection.service';
+import { CollectionService } from './model/collection.service';
 
 @NgModule({
   imports: [
