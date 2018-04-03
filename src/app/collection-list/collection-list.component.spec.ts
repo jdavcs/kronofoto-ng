@@ -5,6 +5,7 @@ import { of } from 'rxjs/observable/of';
 
 import { CollectionListComponent } from './collection-list.component';
 import { CollectionService } from '../model/collection.service';
+import { YearSpanPipe } from '../year-span.pipe';
 
 describe('CollectionListComponent (minimal)', () => {
   let component: CollectionListComponent;
@@ -16,7 +17,7 @@ describe('CollectionListComponent (minimal)', () => {
     collectionServiceSpy.getCollections.and.returnValue( of(testData) ); 
 
     TestBed.configureTestingModule({
-      declarations: [ CollectionListComponent ],
+      declarations: [ CollectionListComponent, YearSpanPipe ],
       providers: [ {provide: CollectionService, useValue: collectionServiceSpy} ]
     });
 

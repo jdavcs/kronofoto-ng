@@ -2,10 +2,18 @@
   collection-list works!
 </p>
 
-<ul *ngFor="let collection of records">
-  <li>
-    {{collection.id}}
-  </li>
-</ul>
+<div *ngFor="let c of records">
+  <p>id: {{ c.id }}
+  <p><img src="{{c.featured_item_id}}">
+  <p>{{ c.year_min | yearSpan:c.year_max }}
+  <p>{{ c.item_count }}
+  <p>{{ c.modified | date }}
+  <p>{{ c.donor_first_name }}
+  <p>{{ c.donor_last_name }}
+  <p>{{ c.donor_id }}
+  <p>{{ c.name}}
+  <hr>
+</div>
+
 
 

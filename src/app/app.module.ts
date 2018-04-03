@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 
 import { PhotoService } from './photo.service';
 import { CollectionService } from './model/collection.service';
+import { YearSpanPipe } from './year-span.pipe';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { CollectionService } from './model/collection.service';
     CollectionDetailComponent,
     DonorDetailComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    YearSpanPipe
   ],
   providers: [PhotoService, CollectionService],
   bootstrap: [AppComponent]
