@@ -1,18 +1,21 @@
-<p>
-  collection-list works!
-</p>
 
-<div *ngFor="let c of records">
-  <p>id: {{ c.id }}
-  <p><img src="{{c.featured_item_id}}">
-  <p>{{ c.year_min | yearSpan:c.year_max }}
-  <p>{{ c.item_count }}
-  <p>{{ c.modified | date }}
-  <p>{{ c.donor_first_name }}
-  <p>{{ c.donor_last_name }}
-  <p>{{ c.donor_id }}
-  <p>{{ c.name}}
-  <hr>
+<div *ngIf="records">
+
+  <div id="fi-gallery-collection" class="row" *ngFor="let r of rows">
+
+    <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let c of cols">
+      <figure>
+        <img class="fi-img-thumb img-fluid" src="{{getImageSrc(r, c)}}">
+        <figcaption>
+        Collection: {{getRecord(r, c)['name']}}
+        ({{getRecord(r, c)['item_count']}} items)
+        </figcaption>
+      </figure>
+    </div>
+
+  </div>
+
+
 </div>
 
 

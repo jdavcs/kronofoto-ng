@@ -1,3 +1,51 @@
 body {
   background: #fff;
 }
+
+#fi-gallery-collection {
+
+  border: 1px red solid;
+
+  figure {
+    margin: 10px;
+    border: 1px blue solid;
+  }
+
+  figcaption {
+    font-size: .8rem;
+    color: #666;
+  }
+
+
+}
+
+
+
+.fi-img-thumb {
+  /* remove these after images are processed */
+  border: 1px #ddd solid;
+  background: #fff;
+  padding: 3px;
+  border-radius: 2px;
+}
+
+.fi-t42 {
+  border: red 1px solid;
+}
+
+.fi-t43 {
+  display:inline-block;
+  background:#8af;
+  margin:5px;
+  width:20px;
+  text-align:center;
+}
+
+.fi-t44 {
+  border:1px #666 solid; 
+  padding: 20px;
+}
+
+
+
+

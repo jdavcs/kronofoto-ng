@@ -7,7 +7,7 @@ export interface Collection {
   is_published: boolean;  
   readonly created: Date;
   readonly modified: Date;
-  featured_item_id: number;
+  featured_item_identifier: string;
   readonly donor_id: number;
   readonly donor_first_name: string;
   readonly donor_last_name: string;

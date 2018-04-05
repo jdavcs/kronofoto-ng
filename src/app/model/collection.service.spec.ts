@@ -31,7 +31,7 @@ describe('CollectionService', () => {
       is_published: false,
       created: new Date(),
       modified: new Date(),
-      featured_item_id: 2,
+      featured_item_identifier: 'TEST-ID',
       donor_id: 3,
       donor_first_name: 'arthur',
       donor_last_name: 'dent'
