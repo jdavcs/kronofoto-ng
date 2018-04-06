@@ -8,6 +8,9 @@
         <img class="fi-img-thumb img-fluid" src="{{getImageSrc(r, c)}}">
         <figcaption>
         Collection: {{getRecord(r, c)['name']}}
+
+        <br>{{ getRecord(r, c)['year_min'] | yearSpan: getRecord(r, c)['year_max'] }}
+
         ({{getRecord(r, c)['item_count']}} items)
         </figcaption>
       </figure>

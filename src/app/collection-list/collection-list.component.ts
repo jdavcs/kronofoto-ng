@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CollectionService } from '../model/collection.service';
-import { FooDirective } from '../foo.directive';
 
 @Component({
   selector: 'app-collection-list',
@@ -32,13 +31,13 @@ export class CollectionListComponent {
 
   getImageSrc(row, col) {
     const record = this.getRecord(row, col);
-    return "http://localhost/fortepan/h700/" + record['featured_item_identifier'] + "_x700.jpg";
+    return "http://localhost/fortepan/featured/" + record['featured_item_identifier'] + "_f.jpg";
   }
 
   private getNumberOfRows(): number {
     const len = this.records.length;
     const remainder = len % this.columns;
-    return parseInt(len / this.columns) + Math.min(1, remainder);
+    return Math.floor(len / this.columns) + Math.min(1, remainder);
   }
 
   private makeIndexArray(count): number[] {
