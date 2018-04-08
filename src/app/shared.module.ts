@@ -9,5 +9,3 @@ import { YearSpanPipe } from './year-span.pipe';
   exports: [ YearSpanPipe]
 })
 export class SharedModule { }
-
-
