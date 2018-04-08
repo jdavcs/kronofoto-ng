@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CollectionService } from '../model/collection.service';
+import { YearSpanPipe } from '../year-span.pipe';
 
 @Component({
-  selector: 'app-collection-list',
   templateUrl: './collection-list.component.html',
   styleUrls: ['./collection-list.component.scss']
 })
@@ -12,12 +13,29 @@ export class CollectionListComponent {
   rows: number[]; //grid row indexes
   cols: number[]; //grid column indexes
 
-  constructor(private collectionService: CollectionService) {
+  constructor(
+    private collectionService: CollectionService,
+    private route: ActivatedRoute
+  ) {
     this.initList();
   }
 
   initList() {
-    this.collectionService.getCollections()
+
+    //get parameters!
+    const qParams = this.route.snapshot.queryParamMap;
+
+    const offset: number = Number(qParams.get('offset')) || 0;
+    const limit:  number = Number(qParams.get('limit')) || CollectionService.DEFAULT_PAGE_SIZE;
+
+    //limit = limit ? parseInt(limit) : 0;
+
+    console.log('offset ' + offset);
+    console.log('limit ' + limit);
+
+    
+    //this.collectionService.getCollections(offset, limit)
+    this.collectionService.getCollections(offset, limit)
       .subscribe(data => {
         this.records = data;
         this.cols = this.makeIndexArray(this.columns);

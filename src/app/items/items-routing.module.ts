@@ -20,5 +20,3 @@ const itemRoutes: Routes = [
   ]
 })
 export class ItemsRoutingModule {}
-
-

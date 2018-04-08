@@ -3,9 +3,12 @@ import { By }  from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs/observable/of';
 
+import { ActivatedRouter } from '@angular/router';
+
 import { CollectionListComponent } from './collection-list.component';
 import { CollectionService } from '../model/collection.service';
 import { YearSpanPipe } from '../year-span.pipe';
+
 
 describe('CollectionListComponent (minimal)', () => {
   let component: CollectionListComponent;
@@ -18,7 +21,9 @@ describe('CollectionListComponent (minimal)', () => {
 
     TestBed.configureTestingModule({
       declarations: [ CollectionListComponent, YearSpanPipe ],
-      providers: [ {provide: CollectionService, useValue: collectionServiceSpy} ]
+      providers: [ {provide: CollectionService, useValue: collectionServiceSpy},
+        ActivatedRouter
+      ]
     });
 
     fixture = TestBed.createComponent(CollectionListComponent);
