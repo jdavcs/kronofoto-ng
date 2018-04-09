@@ -1,25 +1,22 @@
-
 <div *ngIf="records">
 
-  <div id="fi-gallery-collection" class="row" *ngFor="let r of rows">
-
-    <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let c of cols">
+  <div id="fi-gallery-collection" class="row" *ngFor="let r of foos">
+    <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let c of r">
       <figure>
-        <img class="fi-img-thumb img-fluid" src="{{getImageSrc(r, c)}}">
+        <a [routerLink]="['/collection', c.id]">
+          <img class="fi-img-thumb img-fluid" src="{{getImageSrc(c.featured_item_identifier)}}"></a>
         <figcaption>
-        Collection: {{getRecord(r, c)['name']}}
+        <a [routerLink]="['/collection', c.id]">Collection: {{c.name}}</a>
 
-        <br>{{ getRecord(r, c)['year_min'] | yearSpan: getRecord(r, c)['year_max'] }}
+        <br>{{c.year_min | yearSpan: c.year_max }}
 
-        ({{getRecord(r, c)['item_count']}} items)
+        ({{c.item_count}} items)
         </figcaption>
       </figure>
+
     </div>
 
   </div>
 
-
 </div>
-
-
 

@@ -6,7 +6,7 @@ import { CollectionDetailComponent } from './collection-detail.component';
 
 const collectionRoutes: Routes = [
   { path: 'collections', component: CollectionListComponent },
-  { path: 'collections/:id', component: CollectionDetailComponent }
+  { path: 'collection/:id', component: CollectionDetailComponent }
 ]
 
 @NgModule({

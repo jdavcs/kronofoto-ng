@@ -12,6 +12,9 @@ export class CollectionListComponent {
   records;
   rows: number[]; //grid row indexes
   cols: number[]; //grid column indexes
+  foos;
+
+
 
   constructor(
     private collectionService: CollectionService,
@@ -33,23 +36,53 @@ export class CollectionListComponent {
     console.log('offset ' + offset);
     console.log('limit ' + limit);
 
-    
+
     //this.collectionService.getCollections(offset, limit)
+    /*
     this.collectionService.getCollections(offset, limit)
       .subscribe(data => {
         this.records = data;
         this.cols = this.makeIndexArray(this.columns);
         this.rows = this.makeIndexArray(this.getNumberOfRows());
       });
+     */
+
+
+    this.collectionService.getCollections(offset, limit)
+      .subscribe(data => {
+        this.records = data;
+        this.foos = [];
+
+        for (let i=0; i<this.getNumberOfRows(); i++) {
+          let cols = [];
+          this.foos.push(cols);
+          for (let j=0; j<this.columns; j++) {
+            let k = (i * this.columns) + j;
+            cols.push(this.records[k]);
+          }
+        }
+      });
+  }
+
+  getLink(col: number, row: number) {
+    if (this.records) {
+      console.log('col=' + col);
+      console.log(this.records[col]);
+      const id = this.records[1]['id'];//this.getRecord(column, row)['id'];
+      //const id = this.getRecord(column, row)['id'];
+      return ['/collection', id];
+    }
+    else {
+      return 6;
+    }
   }
 
   getRecord(row, col) {
     return this.records[row * this.columns + col];
   }
 
-  getImageSrc(row, col) {
-    const record = this.getRecord(row, col);
-    return "http://localhost/fortepan/featured/" + record['featured_item_identifier'] + "_f.jpg";
+  getImageSrc(item_id) {
+    return "http://localhost/fortepan/featured/" + item_id + "_f.jpg";
   }
 
   private getNumberOfRows(): number {
