@@ -1,22 +1,19 @@
-<div *ngIf="records">
+<div *ngIf="recordsGrid">
 
-  <div id="fi-gallery-collection" class="row" *ngFor="let r of foos">
-    <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let c of r">
+  <p>Displaying records {{first}}-{{last}} of {{total}}</p>
+
+  <div id="fi-gallery-collection" class="row" *ngFor="let row of recordsGrid">
+    <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let coll of row">
       <figure>
-        <a [routerLink]="['/collection', c.id]">
-          <img class="fi-img-thumb img-fluid" src="{{getImageSrc(c.featured_item_identifier)}}"></a>
+        <a [routerLink]="['/collection', coll.id]">
+          <img class="fi-img-thumb img-fluid" src="{{getImgSrc(coll)}}"></a>
         <figcaption>
-        <a [routerLink]="['/collection', c.id]">Collection: {{c.name}}</a>
-
-        <br>{{c.year_min | yearSpan: c.year_max }}
-
-        ({{c.item_count}} items)
+          <a [routerLink]="['/collection', coll.id]">Collection: {{coll.name}}</a>
+          <br>{{coll.year_min | yearSpan: coll.year_max }}
+          ({{coll.item_count}} items)
         </figcaption>
       </figure>
-
     </div>
-
   </div>
 
 </div>
-

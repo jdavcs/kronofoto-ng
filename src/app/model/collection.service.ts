@@ -21,7 +21,8 @@ export class CollectionService {
   getCollections(
     offset: number = 0, 
     limit: number = CollectionService.DEFAULT_PAGE_SIZE
-  ): Observable<Collection[]> {  
+    //): Observable<Collection[]> {  
+  ) {  
 
     let url = CollectionService.READ_URL;
 
@@ -30,7 +31,11 @@ export class CollectionService {
     params = params.append('limit', String(limit));
     //add more params here
 
-    return this.http.get<Collection[]>(url, {params});
+    //return this.http.get<Collection[]>(url, {
+    return this.http.get(url, {
+      params: params,
+      observe: 'response'
+      });
   }
 }
 

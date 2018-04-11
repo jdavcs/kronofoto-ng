@@ -69,7 +69,7 @@ describe('CollectionService', () => {
     const expectedSize: number = limit - offset;
 
     collectionService.getCollections(offset, limit).subscribe(
-      data => expect(data).toEqual(expected),
+      data => expect(data.body).toEqual(expected),
       fail
     );
 
@@ -92,7 +92,7 @@ describe('CollectionService', () => {
       const expected: Collection[] = [ sampleCollection, sampleCollection ];
 
       collectionService.getCollections().subscribe(
-        data => expect(data).toEqual(expected),
+        data => expect(data.body).toEqual(expected),
         fail
       );
 

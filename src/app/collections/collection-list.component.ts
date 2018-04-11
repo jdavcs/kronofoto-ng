@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { CollectionService } from '../model/collection.service';
+import { Collection } from '../model/collection';
 import { YearSpanPipe } from '../year-span.pipe';
+import { environment } from '../../environments/environment';
 
 @Component({
   templateUrl: './collection-list.component.html',
@@ -9,93 +11,62 @@ import { YearSpanPipe } from '../year-span.pipe';
 })
 export class CollectionListComponent {
   readonly columns: number = 4;
-  records;
-  rows: number[]; //grid row indexes
-  cols: number[]; //grid column indexes
-  foos;
-
-
+  readonly imgSuffix: string = '_f.jpg';
+  recordsGrid: Collection[][] = [];
+  first: number;
+  last: number;
+  total: number;
 
   constructor(
     private collectionService: CollectionService,
     private route: ActivatedRoute
   ) {
-    this.initList();
+    this.loadData();
   }
 
-  initList() {
+  loadData() {
 
-    //get parameters!
+    // TODO change to observable
     const qParams = this.route.snapshot.queryParamMap;
-
     const offset: number = Number(qParams.get('offset')) || 0;
     const limit:  number = Number(qParams.get('limit')) || CollectionService.DEFAULT_PAGE_SIZE;
 
-    //limit = limit ? parseInt(limit) : 0;
-
-    console.log('offset ' + offset);
-    console.log('limit ' + limit);
-
-
-    //this.collectionService.getCollections(offset, limit)
-    /*
     this.collectionService.getCollections(offset, limit)
       .subscribe(data => {
-        this.records = data;
-        this.cols = this.makeIndexArray(this.columns);
-        this.rows = this.makeIndexArray(this.getNumberOfRows());
-      });
-     */
+
+        const records = data.body;
+        const headers = data.headers;
+
+        //get these from http headers. Must test this very carefully!
+        this.first = parseInt(headers.get('paging-first-record'));
+        this.last =  parseInt(headers.get('paging-last-record'));
+        this.total = parseInt(headers.get('paging-total-records'));
 
 
-    this.collectionService.getCollections(offset, limit)
-      .subscribe(data => {
-        this.records = data;
-        this.foos = [];
 
-        for (let i=0; i<this.getNumberOfRows(); i++) {
+        console.log(headers.keys());
+        console.log(headers.get('paging-first-record'));
+
+
+        const rows = 5;
+        for (let i=0; i<rows; i++) {
           let cols = [];
-          this.foos.push(cols);
+          this.recordsGrid.push(cols);
           for (let j=0; j<this.columns; j++) {
-            let k = (i * this.columns) + j;
-            cols.push(this.records[k]);
+            let pos = (i * this.columns) + j;
+            cols.push(records[pos]);
           }
         }
+
       });
   }
 
-  getLink(col: number, row: number) {
-    if (this.records) {
-      console.log('col=' + col);
-      console.log(this.records[col]);
-      const id = this.records[1]['id'];//this.getRecord(column, row)['id'];
-      //const id = this.getRecord(column, row)['id'];
-      return ['/collection', id];
-    }
-    else {
-      return 6;
-    }
+  private getRowCount(count): number {
+    const remainder = count % this.columns;
+    return Math.floor(count / this.columns) + Math.min(1, remainder);
   }
 
-  getRecord(row, col) {
-    return this.records[row * this.columns + col];
-  }
-
-  getImageSrc(item_id) {
-    return "http://localhost/fortepan/featured/" + item_id + "_f.jpg";
-  }
-
-  private getNumberOfRows(): number {
-    const len = this.records.length;
-    const remainder = len % this.columns;
-    return Math.floor(len / this.columns) + Math.min(1, remainder);
-  }
-
-  private makeIndexArray(count): number[] {
-    let a: number[] = [];
-    for (let i=0; i<count; i++) {
-      a.push(i);
-    }
-    return a;
+  getImgSrc(coll) {
+    return environment.collections.pathToFeatured + coll.featured_item_identifier + this.imgSuffix;
   }
 }
