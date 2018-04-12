@@ -2,6 +2,20 @@
 
   <p>Displaying records {{first}}-{{last}} of {{total}}</p>
 
+  <p>
+
+  <a [routerLink]="['/collections']">first</a>
+  <a [routerLink]="['/collections']">previous</a>
+
+  loop over pages
+
+  <a [routerLink]="getNextLink()">next</a>
+  <a [routerLink]="['/collections']">last</a>
+
+
+  </p>
+
+
   <div id="fi-gallery-collection" class="row" *ngFor="let row of recordsGrid">
     <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let coll of row">
       <figure>
