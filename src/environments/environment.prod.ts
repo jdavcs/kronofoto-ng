@@ -11,6 +11,7 @@ export const environment = {
     }
   },
   collections : {
+    columns: 4,
     pathToFeatured: 'TODO',
     imgSuffix: '_f.jpg'
   }

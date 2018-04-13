@@ -1,7 +1,8 @@
+import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
 
 import { Collection } from '../model/collection';
 import { CollectionService } from '../model/collection.service';
@@ -13,28 +14,32 @@ import { YearSpanPipe } from '../year-span.pipe';
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
-  recordsGrid: Collection[][] = [];
-  columns: number = 4;
+  recordsGrid: Collection[][];
+  columns: number = environment.collections.columns;
+  pageSize: number; 
   totalRecords: number;
   firstRecord: number;
   lastRecord: number;
   totalPages: number;
-  pageSize: number;
   pageNumber: number;
 
   constructor(
+    private route: ActivatedRoute,
     private collectionService: CollectionService,
-    private route: ActivatedRoute) {}
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
         //get page/pagesize params and convert them to offset/limit
-        const pageNumber: number = Number(qParams.get('page')) || 0;
-        const pageSize:  number = Number(qParams.get('pagesize')) || CollectionService.DEFAULT_PAGE_SIZE;
-        const offset: number = (pageNumber - 1) * pageSize;
-        const limit: number = pageSize;
-        return this.collectionService.getCollections(offset, limit)
+        //
+        this.pageSize = +qParams.get('pagesize') || CollectionService.DEFAULT_PAGE_SIZE;
+
+        const pageNumber: number = +qParams.get('page') || 0; //neat way to conver to a number)
+        const offset: number = (pageNumber - 1) * this.pageSize;
+        const limit: number = this.pageSize;
+        return this.collectionService.getCollections(offset, limit);
       })
       .subscribe( data => {
         this.loadHeaders(data.headers);
@@ -48,12 +53,13 @@ export class CollectionListComponent implements OnInit {
     this.firstRecord  = parseInt(headers.get(environment.pagination.headers.firstRecord));
     this.lastRecord   = parseInt(headers.get(environment.pagination.headers.lastRecord));
     this.totalPages   = parseInt(headers.get(environment.pagination.headers.totalPages));
-    this.pageSize     = parseInt(headers.get(environment.pagination.headers.pageSize));
     this.pageNumber   = parseInt(headers.get(environment.pagination.headers.pageNumber));
   }
 
   displayData(records) {
-    const rows = Math.ceil(this.pageSize / this.columns);
+    const totalRecords: number = this.lastRecord - this.firstRecord + 1;
+    const rows = Math.ceil(totalRecords / this.columns);
+    this.recordsGrid = [];
     for (let i=0; i<rows; i++) {
       let cols = [];
       this.recordsGrid.push(cols);
@@ -63,10 +69,28 @@ export class CollectionListComponent implements OnInit {
       }
     }
   }
+  
+  firstPage() {
+    this.goToPage(1); 
+  }
 
-  getNextLink(){
-    //TODO
-    return ['/collections?offset=20'];
+  prevPage() {
+    const pageNum: number = Math.max(1, this.pageNumber - 1);
+    this.goToPage(pageNum); 
+  }
+
+  nextPage() {
+    const pageNum: number = Math.min(this.totalPages, this.pageNumber + 1);
+    this.goToPage(pageNum); 
+  }
+
+  lastPage() {
+    this.goToPage(this.totalPages); 
+  }
+
+  goToPage(pageNum) {
+    const extras: NavigationExtras = { queryParams: {page: pageNum, pagesize: this.pageSize} };
+    this.router.navigate(['/collections'], extras);
   }
 
   getImgSrc(coll) {

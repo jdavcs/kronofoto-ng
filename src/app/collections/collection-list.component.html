@@ -1,12 +1,12 @@
-<div *ngIf="recordsGrid.length">
+<div *ngIf="recordsGrid && recordsGrid.length">
 
   <p>Displaying records {{firstRecord}}-{{lastRecord}} of {{totalRecords}}</p>
   <p>
-  <a [routerLink]="['/collections']">first</a>
-  <a [routerLink]="['/collections']">previous</a>
+  <button [disabled]="pageNumber === 1" (click)="firstPage()">first</button>
+  <button [disabled]="pageNumber === 1" (click)="prevPage()">prev</button>
   loop over pages
-  <a [routerLink]="getNextLink()">next</a>
-  <a [routerLink]="['/collections']">last</a>
+  <button [disabled]="pageNumber === totalPages" (click)="nextPage()">next</button>
+  <button [disabled]="pageNumber === totalPages" (click)="lastPage()">last</button>
   </p>
 
 
@@ -26,6 +26,6 @@
 
 </div>
 
-<div *ngIf="!recordsGrid.length">
+<div *ngIf="recordsGrid && !recordsGrid.length">
   no items to display
 </div>

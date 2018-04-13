@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
-import { CollectionService } from '../model/collection.service';
 import { Collection } from '../model/collection';
+import { CollectionService } from '../model/collection.service';
 
 @Component({
   templateUrl: './collection-detail.component.html',
@@ -15,14 +15,21 @@ export class CollectionDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private service: CollectionService
+    private service: CollectionService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.collection$ = this.route.paramMap
-      .switchMap( (params: ParamMap) =>
-        this.service.getCollection(params.get('id')) );
+      .switchMap( (params: ParamMap) => {
+        const y = params.get('id');
+        console.log(y);
+        return this.service.getCollection(params.get('id')); 
+      });
+  }
+
+  goToList() {
+    this.router.navigate(['/collections', {foo: 42}], { queryParams: { page: 5 } });
   }
 
 
