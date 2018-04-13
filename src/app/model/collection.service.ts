@@ -31,7 +31,7 @@ export class CollectionService {
     return this.http.get<Collection[]>(url, {
       params: params,
       observe: 'response' //because we need the headers returned by the API
-      });
+    });
   }
 }
 

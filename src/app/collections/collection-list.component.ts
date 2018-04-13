@@ -29,8 +29,11 @@ export class CollectionListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
-        const offset: number = Number(qParams.get('offset')) || 0;
-        const limit:  number = Number(qParams.get('limit')) || CollectionService.DEFAULT_PAGE_SIZE;
+        //get page/pagesize params and convert them to offset/limit
+        const pageNumber: number = Number(qParams.get('page')) || 0;
+        const pageSize:  number = Number(qParams.get('pagesize')) || CollectionService.DEFAULT_PAGE_SIZE;
+        const offset: number = (pageNumber - 1) * pageSize;
+        const limit: number = pageSize;
         return this.collectionService.getCollections(offset, limit)
       })
       .subscribe( data => {
