@@ -2,6 +2,11 @@ import { DebugElement } from '@angular/core';
 import { By }  from '@angular/platform-browser';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/switchMap';
+
+import { HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+
 
 //import { ActivatedRouter } from '@angular/router';
 

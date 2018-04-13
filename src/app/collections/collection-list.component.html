@@ -1,18 +1,12 @@
 <div *ngIf="recordsGrid">
 
   <p>Displaying records {{first}}-{{last}} of {{total}}</p>
-
   <p>
-
   <a [routerLink]="['/collections']">first</a>
   <a [routerLink]="['/collections']">previous</a>
-
   loop over pages
-
   <a [routerLink]="getNextLink()">next</a>
   <a [routerLink]="['/collections']">last</a>
-
-
   </p>
 
 

@@ -15,6 +15,9 @@ import { PageNotFoundComponent } from './pagenotfound/pagenotfound.component';
 import { PhotoService } from './photo.service';
 import { CollectionService } from './model/collection.service';
 
+import { FooComponent } from './foo.component';
+
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -24,6 +27,7 @@ import { CollectionService } from './model/collection.service';
     AppRoutingModule
   ],
   declarations: [
+    FooComponent,
     AppComponent,
     DonorListComponent,
     DonorDetailComponent,

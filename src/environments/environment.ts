@@ -1,14 +1,17 @@
 export const environment = {
   production: false,
-  httpHeaders: {
-    pagingRecords  : 'Paging-total-records',
-    pagingPages    : 'Paging-total-pages',
-    pagingPagesize : 'Paging-page-size',
-    pagingPage     : 'Paging-page',
-    pagingFirst    : 'Paging-first-record',
-    pagingLast     : 'Paging-last-record'
+  pagination: {
+    headers: {
+      totalRecords : 'Pagination-Total-Records',
+      firstRecord  : 'Pagination-First-Record',
+      lastRecord   : 'Pagination-Last-Record', 
+      totalPages   : 'Pagination-Total-Pages', 
+      pageSize     : 'Pagination-Page-Size',
+      pageNumber   : 'Pagination-Page-Number' 
+    }
   },
   collections : {
-    pathToFeatured: 'http://localhost/fortepan/featured/'
+    pathToFeatured: 'http://localhost/fortepan/featured/',
+    imgSuffix: '_f.jpg'
   }
 };

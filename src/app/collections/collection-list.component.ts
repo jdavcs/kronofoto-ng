@@ -1,29 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { CollectionService } from '../model/collection.service';
-import { Collection } from '../model/collection';
-import { YearSpanPipe } from '../year-span.pipe';
-import { environment } from '../../environments/environment';
-
-import { Observable } from 'rxjs/Observable';
-
 import { HttpParams, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { Collection } from '../model/collection';
+import { CollectionService } from '../model/collection.service';
+import { environment } from '../../environments/environment';
+import { YearSpanPipe } from '../year-span.pipe';
 
 @Component({
   templateUrl: './collection-list.component.html',
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
-  readonly columns: number = 4;
-  readonly imgSuffix: string = '_f.jpg';
   recordsGrid: Collection[][] = [];
-  first: number;
-  last: number;
-  total: number;
+  columns: number = 4;
+  totalRecords: number;
+  firstRecord: number;
+  lastRecord: number;
+  totalPages: number;
   pageSize: number;
-
-  foo$: Observable<Collection[]>;
+  pageNumber: number;
 
   constructor(
     private collectionService: CollectionService,
@@ -36,25 +33,24 @@ export class CollectionListComponent implements OnInit {
         const limit:  number = Number(qParams.get('limit')) || CollectionService.DEFAULT_PAGE_SIZE;
         return this.collectionService.getCollections(offset, limit)
       })
-      .subscribe( data => this.processData(data) );
+      .subscribe( data => {
+        this.loadHeaders(data.headers);
+        this.displayData(data.body);
+      });
   }
 
-  processData(data) {
-    const records = data.body;
-    const headers = data.headers;
+  loadHeaders(headers) {
+    //TODO: add exception handling (there's no default values for total records)
+    this.totalRecords = parseInt(headers.get(environment.pagination.headers.totalRecords));
+    this.firstRecord  = parseInt(headers.get(environment.pagination.headers.firstRecord));
+    this.lastRecord   = parseInt(headers.get(environment.pagination.headers.lastRecord));
+    this.totalPages   = parseInt(headers.get(environment.pagination.headers.totalPages));
+    this.pageSize     = parseInt(headers.get(environment.pagination.headers.pageSize));
+    this.pageNumber   = parseInt(headers.get(environment.pagination.headers.pageNumber));
+  }
 
-    //get these from http headers. Must test this very carefully!
-    //provide default values just in case
-    ////also, get these from the env
-    this.first = parseInt(headers.get('paging-first-record'));
-    this.last =  parseInt(headers.get('paging-last-record'));
-    this.total = parseInt(headers.get('paging-total-records'));
-    this.pageSize = parseInt(headers.get('paging-page-size'));
-
-    console.log(this.pageSize);
-    console.log(this.getRowCount(this.pageSize));
-
-    const rows = this.getRowCount(this.pageSize);
+  displayData(records) {
+    const rows = Math.ceil(this.pageSize / this.columns);
     for (let i=0; i<rows; i++) {
       let cols = [];
       this.recordsGrid.push(cols);
@@ -66,15 +62,12 @@ export class CollectionListComponent implements OnInit {
   }
 
   getNextLink(){
+    //TODO
     return ['/collections?offset=20'];
   }
 
-  private getRowCount(count): number {
-    const remainder = count % this.columns;
-    return Math.floor(count / this.columns) + Math.min(1, remainder);
-  }
-
   getImgSrc(coll) {
-    return environment.collections.pathToFeatured + coll.featured_item_identifier + this.imgSuffix;
+    return environment.collections.pathToFeatured + 
+      coll.featured_item_identifier + environment.collections.imgSuffix;
   }
 }
