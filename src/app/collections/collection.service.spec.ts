@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { CollectionService } from './collection.service';
+import { CollectionService } from './collections.service';
 import { Collection } from './collection';
 
 

@@ -12,7 +12,9 @@ import { AppComponent }          from './app.component';
 import { HomeComponent }     from './home.component';
 import { PageNotFoundComponent } from './pagenotfound.component';
 
-import { CollectionService } from './model/collection.service'; //TODO  rename this to collection-data.service
+import { CollectionService } from './collections/collection.service';
+import { ItemService }      from './items/item.service';
+
 import { PhotoService } from './photo.service'; //TODO remove this
 
 @NgModule({
@@ -30,7 +32,9 @@ import { PhotoService } from './photo.service'; //TODO remove this
     HomeComponent,
     PageNotFoundComponent 
   ],
-  providers: [ CollectionService,
+  providers: [ 
+    ItemService,
+    CollectionService,
     PhotoService
   ],
   bootstrap: [AppComponent]

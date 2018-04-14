@@ -4,8 +4,8 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
 
-import { Collection } from '../model/collection';
-import { CollectionService } from '../model/collection.service';
+import { Collection } from './collection';
+import { CollectionService } from './collection.service';
 import { environment } from '../../environments/environment';
 import { YearSpanPipe } from '../year-span.pipe';
 

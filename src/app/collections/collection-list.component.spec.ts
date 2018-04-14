@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 //import { ActivatedRouter } from '@angular/router';
 
 import { CollectionListComponent } from './collection-list.component';
-import { CollectionService } from '../model/collection.service';
+import { CollectionService } from './collection.service';
 import { YearSpanPipe } from '../year-span.pipe';
 
 /*
