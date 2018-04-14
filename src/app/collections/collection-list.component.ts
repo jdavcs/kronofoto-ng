@@ -15,13 +15,13 @@ import { YearSpanPipe } from '../year-span.pipe';
 })
 export class CollectionListComponent implements OnInit {
   recordsGrid: Collection[][];
-  columns: number = environment.collections.columns;
   pageSize: number; 
   totalRecords: number;
   firstRecord: number;
   lastRecord: number;
   totalPages: number;
   pageNumber: number;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -33,11 +33,9 @@ export class CollectionListComponent implements OnInit {
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
         //get page/pagesize params and convert them to offset/limit
-        //
-        this.pageSize = +qParams.get('pagesize') || CollectionService.DEFAULT_PAGE_SIZE;
-
-        const pageNumber: number = +qParams.get('page') || 0; //neat way to conver to a number)
-        const offset: number = (pageNumber - 1) * this.pageSize;
+        this.pageSize = +qParams.get(environment.pagination.pageSizeParameter) || CollectionService.DEFAULT_PAGE_SIZE;
+        this.pageNumber = +qParams.get(environment.pagination.pageNumberParameter) || 1;
+        const offset: number = (this.pageNumber - 1) * this.pageSize;
         const limit: number = this.pageSize;
         return this.collectionService.getCollections(offset, limit);
       })
@@ -53,23 +51,23 @@ export class CollectionListComponent implements OnInit {
     this.firstRecord  = parseInt(headers.get(environment.pagination.headers.firstRecord));
     this.lastRecord   = parseInt(headers.get(environment.pagination.headers.lastRecord));
     this.totalPages   = parseInt(headers.get(environment.pagination.headers.totalPages));
-    this.pageNumber   = parseInt(headers.get(environment.pagination.headers.pageNumber));
   }
 
   displayData(records) {
     const totalRecords: number = this.lastRecord - this.firstRecord + 1;
-    const rows = Math.ceil(totalRecords / this.columns);
+    const columns: number = environment.collections.columns;
+    const rows = Math.ceil(totalRecords / columns);
     this.recordsGrid = [];
     for (let i=0; i<rows; i++) {
       let cols = [];
       this.recordsGrid.push(cols);
-      for (let j=0; j<this.columns; j++) {
-        let pos = (i * this.columns) + j;
+      for (let j=0; j<columns; j++) {
+        let pos = (i * columns) + j;
         cols.push(records[pos]);
       }
     }
   }
-  
+ 
   firstPage() {
     this.goToPage(1); 
   }

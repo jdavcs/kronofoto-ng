@@ -1,12 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../shared.module';
-
-import { CollectionListComponent } from './collection-list.component';
-import { CollectionDetailComponent } from './collection-detail.component';
-
+import { SharedModule }             from '../shared.module';
 import { CollectionsRoutingModule } from './collections-routing.module';
+import { CollectionListComponent }  from './collection-list.component';
 
 @NgModule({
   imports: [
@@ -15,9 +12,7 @@ import { CollectionsRoutingModule } from './collections-routing.module';
     SharedModule
   ],
   declarations: [
-    CollectionListComponent,
-    CollectionDetailComponent
+    CollectionListComponent
   ]
 })
 export class CollectionsModule { }
-

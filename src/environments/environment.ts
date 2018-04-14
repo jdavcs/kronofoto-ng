@@ -8,7 +8,9 @@ export const environment = {
       totalPages   : 'Pagination-Total-Pages', 
       pageSize     : 'Pagination-Page-Size',
       pageNumber   : 'Pagination-Page-Number' 
-    }
+    },
+    pageNumberParameter: 'page',
+    pageSizeParameter: 'pagesize'
   },
   collections : {
     columns: 4,
