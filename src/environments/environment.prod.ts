@@ -13,12 +13,12 @@ export const environment = {
     pageSizeParameter: 'pagesize'
   },
   collections: {
-    columns: 4,
+    columns: 12,
     pathToFeatured: 'TODO',
     imgSuffix: '_f.jpg'
   },
   items: {
-    columns: 4,
-    pathToFeatured: 'TODO'
+    columns: 12,
+    imgSuffix: '.jpg'
   }
 };

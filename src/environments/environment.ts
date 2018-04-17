@@ -14,12 +14,14 @@ export const environment = {
   },
   collections: {
     columns: 12,
-    pathToFeatured: 'http://localhost/fortepan/featured/',
-    imgSuffix: '_f.jpg'
+    pathToFeatured: 'http://localhost/fortepan/featured_600x450/',
+    imgSuffix: '_600x450.jpg'
   },
   items: {
     columns: 12,
     imgSuffix: '.jpg',
-    pathTo400: 'http://localhost/fortepan/h400/'
+    pathTo400: 'http://localhost/fortepan/h400/',
+    pathTo600: 'http://localhost/fortepan/w600/',
+    pathTo700: 'http://localhost/fortepan/h700/'
   }
 };
