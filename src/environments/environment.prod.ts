@@ -12,9 +12,13 @@ export const environment = {
     pageNumberParameter: 'page',
     pageSizeParameter: 'pagesize'
   },
-  collections : {
+  collections: {
     columns: 4,
     pathToFeatured: 'TODO',
     imgSuffix: '_f.jpg'
+  },
+  items: {
+    columns: 4,
+    pathToFeatured: 'TODO'
   }
 };

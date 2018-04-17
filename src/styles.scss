@@ -17,33 +17,28 @@ body {
   background: #fff;
 }
 
-#fi-gallery-collection {
-
-
+.fi-gallery-collection {
   figure {
     margin: 10px;
   }
-
   figcaption {
     font-size: .8rem;
     color: #666;
   }
-
-
+  img {
+    border: 1px #ddd solid;
+    background: #fff;
+    padding: 5px;
+    border-radius: 2px;
+  }
+  a {
+    color: #666;
+  }
+  a:hover {
+    color: #007bff;
+  }
 }
 
-
-
-.fi-img-thumb {
-  /* remove these after images are processed */
-  border: 1px #ddd solid;
-  background: #fff;
-  padding: 3px;
-  border-radius: 2px;
-}
-
-.fi-t42 {
-}
 
 .fi-t43 {
   display:inline-block;

@@ -1,14 +1,14 @@
 export interface Collection {
   readonly id: number;
-  name: string;
-  readonly year_min: number;
-  readonly year_max: number;
-  readonly item_count: number;
-  is_published: boolean;  
+  readonly name: string;
+  readonly yearMin: number;
+  readonly yearMax: number;
+  readonly itemCount: number;
+  readonly isPublished: boolean;  
   readonly created: Date;
   readonly modified: Date;
-  featured_item_identifier: string;
-  readonly donor_id: number;
-  readonly donor_first_name: string;
-  readonly donor_last_name: string;
+  readonly featuredItemIdentifier: string;
+  readonly donorId: number;
+  readonly donorFirstName: string;
+  readonly donorLastName: string;
 }

@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { CollectionService } from './collections.service';
+import { CollectionService } from './collection.service';
 import { Collection } from './collection';
 
 
@@ -25,16 +25,16 @@ describe('CollectionService', () => {
     sampleCollection = {
       id: 1,
       name: 'foo',
-      year_min: 1980,
-      year_max: 1989,
-      item_count: 100,
-      is_published: false,
+      yearMin: 1980,
+      yearMax: 1989,
+      itemCount: 100,
+      isPublished: false,
       created: new Date(),
       modified: new Date(),
-      featured_item_identifier: 'TEST-ID',
-      donor_id: 3,
-      donor_first_name: 'arthur',
-      donor_last_name: 'dent'
+      featuredItemIdentifier: 'TEST-ID',
+      donorId: 3,
+      donorFirstName: 'arthur',
+      donorLastName: 'dent'
     }
   });
 
@@ -66,7 +66,6 @@ describe('CollectionService', () => {
 
     const offset: number = 17;
     const limit: number = 42;
-    const expectedSize: number = limit - offset;
 
     collectionService.getCollections(offset, limit).subscribe(
       data => expect(data.body).toEqual(expected),

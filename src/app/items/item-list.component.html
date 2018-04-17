@@ -1,7 +1,34 @@
-<ul *ngFor="let item of items">
-  <li>{{item.year_min}}
-    {{item.collection_id}}
-  </li>
-</ul>
+<ng-container *ngIf="recordsGrid && recordsGrid.length">
 
+  <div class="row">
+    <div class="col">
+      <p>Displaying records {{firstRecord}}-{{lastRecord}} of {{totalRecords}}</p>
+      <p>
+      <button [disabled]="pageNumber === 1" (click)="firstPage()">first</button>
+      <button [disabled]="pageNumber === 1" (click)="prevPage()">prev</button>
+      loop over pages
+      <button [disabled]="pageNumber === totalPages" (click)="nextPage()">next</button>
+      <button [disabled]="pageNumber === totalPages" (click)="lastPage()">last</button>
+      </p>
+    </div>
+  </div>
 
+  <div class="row fi-gallery-collection" *ngFor="let row of recordsGrid">
+    <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let item of row">
+      <figure *ngIf="item">
+        <a [routerLink]="['/item',item.identifier]">
+          <img class="img-fluid" src="{{getImgSrc(item)}}"></a>
+        <figcaption>
+          {{getYearDisplay(item)}} 
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+</ng-container>
+
+<div *ngIf="recordsGrid && !recordsGrid.length" class="row">
+  <div class="col">
+    no items to display
+  </div>
+</div>

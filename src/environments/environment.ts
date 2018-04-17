@@ -12,9 +12,14 @@ export const environment = {
     pageNumberParameter: 'page',
     pageSizeParameter: 'pagesize'
   },
-  collections : {
-    columns: 4,
+  collections: {
+    columns: 12,
     pathToFeatured: 'http://localhost/fortepan/featured/',
     imgSuffix: '_f.jpg'
+  },
+  items: {
+    columns: 12,
+    imgSuffix: '.jpg',
+    pathTo400: 'http://localhost/fortepan/h400/'
   }
 };

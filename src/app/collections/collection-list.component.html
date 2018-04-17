@@ -1,31 +1,36 @@
-<div *ngIf="recordsGrid && recordsGrid.length">
+<ng-container *ngIf="recordsGrid && recordsGrid.length">
 
-  <p>Displaying records {{firstRecord}}-{{lastRecord}} of {{totalRecords}}</p>
-  <p>
-  <button [disabled]="pageNumber === 1" (click)="firstPage()">first</button>
-  <button [disabled]="pageNumber === 1" (click)="prevPage()">prev</button>
-  loop over pages
-  <button [disabled]="pageNumber === totalPages" (click)="nextPage()">next</button>
-  <button [disabled]="pageNumber === totalPages" (click)="lastPage()">last</button>
-  </p>
+  <div class="row">
+    <div class="col">
+      <p>Displaying records {{firstRecord}}-{{lastRecord}} of {{totalRecords}}</p>
+      <p>
+      <button [disabled]="pageNumber === 1" (click)="firstPage()">first</button>
+      <button [disabled]="pageNumber === 1" (click)="prevPage()">prev</button>
+      loop over pages
+      <button [disabled]="pageNumber === totalPages" (click)="nextPage()">next</button>
+      <button [disabled]="pageNumber === totalPages" (click)="lastPage()">last</button>
+      </p>
+    </div>
+  </div>
 
-
-  <div id="fi-gallery-collection" class="row" *ngFor="let row of recordsGrid">
-    <div class="fi-t42 col-12 col-md col-sm-6" *ngFor="let coll of row">
+  <div class="row fi-gallery-collection" *ngFor="let row of recordsGrid">
+    <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let coll of row">
       <figure *ngIf="coll">
         <a [routerLink]="['/collection', coll.id]">
-          <img class="fi-img-thumb img-fluid" src="{{getImgSrc(coll)}}"></a>
+          <img class="img-fluid" src="{{getImgSrc(coll)}}"></a>
         <figcaption>
-          <a [routerLink]="['/collection', coll.id]">Collection: {{coll.name}}</a>
-          <br>{{coll.year_min | yearSpan: coll.year_max }}
-          ({{coll.item_count}} items)
+        <a [routerLink]="['/collection', coll.id]">Collection: {{coll.name}}</a>
+        <br>{{coll.year_min | yearSpan: coll.year_max }}
+        ({{coll.item_count}} items)
         </figcaption>
       </figure>
     </div>
   </div>
 
-</div>
+</ng-container>
 
-<div *ngIf="recordsGrid && !recordsGrid.length">
-  no items to display
+<div *ngIf="recordsGrid && !recordsGrid.length" class="row">
+  <div class="col">
+    no collections to display
+  </div>
 </div>

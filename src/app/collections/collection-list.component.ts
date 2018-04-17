@@ -22,7 +22,6 @@ export class CollectionListComponent implements OnInit {
   totalPages: number;
   pageNumber: number;
 
-
   constructor(
     private route: ActivatedRoute,
     private collectionService: CollectionService,
@@ -33,7 +32,8 @@ export class CollectionListComponent implements OnInit {
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
         //get page/pagesize params and convert them to offset/limit
-        this.pageSize = +qParams.get(environment.pagination.pageSizeParameter) || CollectionService.DEFAULT_PAGE_SIZE;
+        this.pageSize = 
+          +qParams.get(environment.pagination.pageSizeParameter) || CollectionService.DEFAULT_PAGE_SIZE;
         this.pageNumber = +qParams.get(environment.pagination.pageNumberParameter) || 1;
         const offset: number = (this.pageNumber - 1) * this.pageSize;
         const limit: number = this.pageSize;
@@ -86,13 +86,13 @@ export class CollectionListComponent implements OnInit {
     this.goToPage(this.totalPages); 
   }
 
-  goToPage(pageNum) {
+  goToPage(pageNum: number) {
     const extras: NavigationExtras = { queryParams: {page: pageNum, pagesize: this.pageSize} };
     this.router.navigate(['/collections'], extras);
   }
 
-  getImgSrc(coll) {
+  getImgSrc(coll: Collection) {
     return environment.collections.pathToFeatured + 
-      coll.featured_item_identifier + environment.collections.imgSuffix;
+      coll.featuredItemIdentifier + environment.collections.imgSuffix;
   }
 }
