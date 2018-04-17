@@ -1,28 +1,34 @@
-<div class="container-fluid">
-  <div class="row header1">
-    <div class="col-sm-3">
-      Fortepan Iowa
+<div class="container">
+  <div class="row fi-header-1">
+    <div class="col-3">
+      <a href="/">
+        <img src="/assets/fi_logo.png" alt="Fortepan Iowa">
+      </a>
     </div>
-    <div class="col-sm-9">
-      <nav class="main">
+    <div class="col-9">
+      <nav>
         <ul>
           <li><a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="">Home</a></li>
-          <li><a routerLinkActive="active" routerLink="/items">Items</a></li>
           <li><a routerLinkActive="active" routerLink="/collections">Collections</a></li>
-          <li><a routerLinkActive="active" routerLink="/donors">Donors</a></li>
+          <li><a routerLinkActive="active" routerLink="/items">Photos</a></li>
+          <li><a routerLinkActive="active" routerLink="/contribute">Contribute</a></li>
+          <li><a routerLinkActive="active" routerLink="/about">About</a></li>
         </ul>
       </nav>
     </div>
   </div>
+</div>
 
-  <div class="row">
+<div class="container-fluid fi-header-2"></div>
+
+<div class="container">
+  <div class="row fi-content">
     <div class="col">
-<router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </div>
 
-  <div class="row footer">
-    <div class="col-sm-12">footer</div>
+  <div class="row fi-footer">
+    <div class="col">Copyright Info</div>
   </div>
 </div>
-

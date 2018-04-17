@@ -8,9 +8,9 @@ import { DonorItemListComponent }      from './donor-item-list.component';
 
 const itemRoutes: Routes = [
   { path: 'items', component: ItemListComponent },
-  { path: 'items/:identifier', component: ItemDetailComponent },
-  { path: 'collections/:id/items', component: CollectionItemListComponent },
-  { path: 'donors/:id/items', component: DonorItemListComponent }
+  { path: 'item/:identifier', component: ItemDetailComponent },
+  { path: 'collection/:id/items', component: CollectionItemListComponent },
+  { path: 'donor/:id/items', component: DonorItemListComponent }
 ]
 
 @NgModule({

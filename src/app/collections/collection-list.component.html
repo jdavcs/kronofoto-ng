@@ -14,17 +14,23 @@
   </div>
 
   <div class="row fi-gallery-collection" *ngFor="let row of recordsGrid">
+
     <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let coll of row">
-      <figure *ngIf="coll">
-        <a [routerLink]="['/collection', coll.id]">
-          <img class="img-fluid" src="{{getImgSrc(coll)}}"></a>
-        <figcaption>
-        <a [routerLink]="['/collection', coll.id]">Collection: {{coll.name}}</a>
-        <br>{{coll.year_min | yearSpan: coll.year_max }}
-        ({{coll.item_count}} items)
-        </figcaption>
-      </figure>
+
+
+      <a *ngIf="coll" [routerLink]="['/collection', coll.id]">
+        <figure>
+          <img class="img-fluid" src="{{getImgSrc(coll)}}">
+          <figcaption>
+          Collection: {{coll.name}}
+          <br>{{coll.yearMin | yearSpan: coll.yearMax }}
+          ({{coll.itemCount}} items)
+          </figcaption>
+        </figure>
+      </a>
+
     </div>
+
   </div>
 
 </ng-container>

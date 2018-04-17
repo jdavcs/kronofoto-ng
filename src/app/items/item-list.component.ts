@@ -13,7 +13,7 @@ import { YearSpanPipe } from '../year-span.pipe';
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.scss']
 })
-export class ItemListComponent {
+export class ItemListComponent implements OnInit {
   recordsGrid: Item[][];
   pageSize: number; 
   totalRecords: number;
@@ -93,7 +93,7 @@ export class ItemListComponent {
   }
 
   getImgSrc(item) {
-    return environment.items.pathTo400 + 
+    return environment.items.pathTo600 + 
       item.identifier + environment.items.imgSuffix;
   }
 
