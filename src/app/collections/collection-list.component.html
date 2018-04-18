@@ -18,7 +18,7 @@
     <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let coll of row">
 
 
-      <a *ngIf="coll" [routerLink]="['/collection', coll.id]">
+      <a *ngIf="coll" [routerLink]="['/collection/', coll.id, 'items']">
         <figure>
           <img class="img-fluid" src="{{getImgSrc(coll)}}">
           <figcaption>

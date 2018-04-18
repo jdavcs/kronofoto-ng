@@ -33,4 +33,27 @@ export class ItemService {
       observe: 'response' //because we need the headers returned by the API
     });
   }
+
+  //refactor this
+  getCollectionItems(
+    offset: number = 0, 
+    limit: number = ItemService.DEFAULT_PAGE_SIZE,
+    collId: number
+  ): Observable<HttpResponse<Item[]>> {
+    let url = ItemService.READ_URL;
+
+    let params = new HttpParams();
+    params = params.append('offset', String(offset));
+    params = params.append('limit', String(limit));
+
+    //dosesn't work
+    params = params.append('filter[collection]', String(collId));
+
+    return this.http.get<Item[]>(url, {
+      params: params,
+      observe: 'response' //because we need the headers returned by the API
+    });
+
+
+  }
 }

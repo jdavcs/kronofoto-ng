@@ -51,7 +51,6 @@ export class ItemListComponent implements OnInit {
     this.firstRecord  = parseInt(headers.get(environment.pagination.headers.firstRecord));
     this.lastRecord   = parseInt(headers.get(environment.pagination.headers.lastRecord));
     this.totalPages   = parseInt(headers.get(environment.pagination.headers.totalPages));
-    console.log(this.totalRecords);
   }
 
   displayData(records) {
