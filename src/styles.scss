@@ -44,6 +44,30 @@ body {
   margin-top: 50px;
 }
 
+.fi-gallery-collection {
+    color: #666;
+
+  figure {
+  }
+  figcaption {
+    font-size: .8rem;
+  }
+  img {
+    border: 1px #ddd solid;
+    background: #fff;
+    padding: 5px;
+    border-radius: 2px;
+  }
+  a {
+    color: #666;
+  }
+
+  a:hover {
+    color: #007bff;
+    text-decoration: none;
+  }
+}
+
 
 
 
@@ -63,30 +87,6 @@ body {
 }
 
 
-
-
-
-.fi-gallery-collection {
-  figure {
-  }
-  figcaption {
-    font-size: .8rem;
-    color: #666;
-  }
-  img {
-    border: 1px #ddd solid;
-    background: #fff;
-    padding: 5px;
-    border-radius: 2px;
-  }
-  a {
-    color: #666;
-  }
-  a:hover {
-    color: #007bff;
-    text-decoration: none;
-  }
-}
 
 
 .fi-t43 {

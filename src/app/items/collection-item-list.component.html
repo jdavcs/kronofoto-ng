@@ -2,14 +2,7 @@
 
   <div class="row">
     <div class="col">
-      <p>Displaying records {{firstRecord}}-{{lastRecord}} of {{totalRecords}}</p>
-      <p>
-      <button [disabled]="pageNumber === 1" (click)="firstPage()">first</button>
-      <button [disabled]="pageNumber === 1" (click)="prevPage()">prev</button>
-      loop over pages
-      <button [disabled]="pageNumber === totalPages" (click)="nextPage()">next</button>
-      <button [disabled]="pageNumber === totalPages" (click)="lastPage()">last</button>
-      </p>
+      <fi-pagination [pager]="pager" (pageRequest)="goToPage($event)"></fi-pagination>
     </div>
   </div>
 

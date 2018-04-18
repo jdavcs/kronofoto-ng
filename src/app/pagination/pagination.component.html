@@ -1,0 +1,13 @@
+<div class="fi-pagination">
+
+  <p>Displaying records {{pager.firstRecord}}-{{pager.lastRecord}} of {{pager.totalRecords}}</p>
+
+  <div *ngIf="pager.totalPages > 1">
+    <button [disabled]="pager.pageNumber === 1" (click)="firstPage()">first</button>
+    <button [disabled]="pager.pageNumber === 1" (click)="prevPage()">prev</button>
+    loop over pages
+    <button [disabled]="pager.pageNumber === pager.totalPages" (click)="nextPage()">next</button>
+    <button [disabled]="pager.pageNumber === pager.totalPages" (click)="lastPage()">last</button>
+  </div>
+
+</div>
