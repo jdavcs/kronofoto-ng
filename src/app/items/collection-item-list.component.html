@@ -1,27 +1,25 @@
-<ng-container *ngIf="recordsGrid && recordsGrid.length">
+<ng-container *ngIf="records">
 
   <div class="row">
     <div class="col">
-      <fi-pagination [pager]="pager" (pageRequest)="goToPage($event)"></fi-pagination>
+      <fi-pagination [data]="pData" (pageRequest)="goToPage($event)"></fi-pagination>
     </div>
   </div>
 
-  <div class="row fi-gallery-collection" *ngFor="let row of recordsGrid">
-    <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let item of row">
-      <figure *ngIf="item">
-        <a [routerLink]="['/item',item.identifier]">
-          <img class="img-fluid" src="{{getImgSrc(item)}}"></a>
-        <figcaption>
+  <ng-container *ngIf="records.length">
+
+    <div class="row fi-gallery-collection" *ngFor="let row of records">
+      <div class="col-xl-3 col-md-4 col-sm-6 col-12" *ngFor="let item of row">
+        <figure *ngIf="item">
+          <a [routerLink]="['/item',item.identifier]">
+            <img class="img-fluid" src="{{getImgSrc(item)}}"></a>
+          <figcaption>
           {{getYearDisplay(item)}} 
-        </figcaption>
-      </figure>
+          </figcaption>
+        </figure>
+      </div>
     </div>
-  </div>
+
+  </ng-container>
 
 </ng-container>
-
-<div *ngIf="recordsGrid && !recordsGrid.length" class="row">
-  <div class="col">
-    no items to display
-  </div>
-</div>

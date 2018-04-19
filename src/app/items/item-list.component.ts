@@ -7,16 +7,15 @@ import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/rou
 import { Item } from './item';
 import { ItemService } from './item.service';
 import { environment } from '../../environments/environment';
-import { YearSpanPipe } from '../year-span.pipe';
-import { Pager } from '../pagination/pager';
+import { PaginationData } from '../pagination/pagination-data';
 
 @Component({
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.scss']
 })
 export class ItemListComponent implements OnInit {
-  recordsGrid: Item[][];
-  pager: Pager;
+  records: Item[][];
+  pData: PaginationData;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,56 +24,49 @@ export class ItemListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.pager = this.initPager();
-
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
-        //get page/pagesize params and convert them to offset/limit
-        this.pager.pageSize = 
-          +qParams.get(environment.pagination.pageSizeParameter) || ItemService.DEFAULT_PAGE_SIZE;
-        this.pager.pageNumber = +qParams.get(environment.pagination.pageNumberParameter) || 1;
-        const offset: number = (this.pager.pageNumber - 1) * this.pager.pageSize;
-        const limit: number = this.pager.pageSize;
+        const [offset, limit] = this.getPagingParams(qParams);
         return this.itemService.getItems(offset, limit);
       })
       .subscribe( data => {
-         this.loadHeaders(data.headers);
-         this.displayData(data.body);
+        this.loadPaginationData(data.headers);
+        this.displayData(data.body);
       });
   }
 
-  initPager() {
-    return {
-      pageSize: -1,
-      totalRecords: -1,
-      firstRecord: -1,
-      lastRecord: -1,
-      totalPages: -1,
-      pageNumber: -1
-    };
+  //TODO this should move to a superclass.
+  getPagingParams(queryParams: ParamMap) {
+    const pageSize = +queryParams.get('pagesize');
+    const pageNumber = +queryParams.get('page') || 1;
+    //API expects offset + limit
+    const offset: number = (pageNumber - 1) * pageSize;
+    const limit: number = pageSize;
+    return Array(offset, limit);
   }
 
-  loadHeaders(headers) {
+  //TODO this should move to a superclass.
+  loadPaginationData(headers) {
     //TODO: add exception handling (there's no default values for total records)
-    const totalRecords = parseInt(headers.get(environment.pagination.headers.totalRecords));
-    const firstRecord  = parseInt(headers.get(environment.pagination.headers.firstRecord));
-    const lastRecord   = parseInt(headers.get(environment.pagination.headers.lastRecord));
-    const totalPages   = parseInt(headers.get(environment.pagination.headers.totalPages));
+    const totalRecords   = parseInt(headers.get(environment.pagination.headers.totalRecords));
+    const pageSize       = parseInt(headers.get(environment.pagination.headers.pageSize));
+    const totalPages     = parseInt(headers.get(environment.pagination.headers.totalPages));
+    const firstRecord    = parseInt(headers.get(environment.pagination.headers.firstRecord));
+    const lastRecord     = parseInt(headers.get(environment.pagination.headers.lastRecord));
+    const currPageNumber = parseInt(headers.get(environment.pagination.headers.currentPageNumber));
+    const currPageSize   = parseInt(headers.get(environment.pagination.headers.currentPageSize));
 
-    this.pager.totalRecords = totalRecords;
-    this.pager.firstRecord  = firstRecord;
-    this.pager.lastRecord   = lastRecord;
-    this.pager.totalPages   = totalPages;
+    this.pData = new PaginationData(
+      totalRecords, pageSize, totalPages, firstRecord, lastRecord, currPageNumber, currPageSize);
   }
 
   displayData(records) {
-    const totalRecords: number = this.pager.lastRecord - this.pager.firstRecord + 1;
     const columns: number = environment.items.columns;
-    const rows = Math.ceil(totalRecords / columns);
-    this.recordsGrid = [];
+    const rows = Math.ceil(this.pData.currentPageSize / columns);
+    this.records = [];
     for (let i=0; i<rows; i++) {
       let cols = [];
-      this.recordsGrid.push(cols);
+      this.records.push(cols);
       for (let j=0; j<columns; j++) {
         let pos = (i * columns) + j;
         cols.push(records[pos]);
@@ -83,7 +75,7 @@ export class ItemListComponent implements OnInit {
   }
 
   goToPage(pageNum: number) {
-    const extras: NavigationExtras = { queryParams: {page: pageNum, pagesize: this.pager.pageSize} };
+    const extras: NavigationExtras = { queryParams: {page: pageNum, pagesize: this.pData.pageSize} };
     this.router.navigate(['/items'], extras);
   }
 
@@ -98,8 +90,7 @@ export class ItemListComponent implements OnInit {
       return String(item.yearMin);
     }
     else {
-      return 'b';
-      //return `circa ${item.yearMin}`; 
+      return `circa ${item.yearMin}`; 
     }
   }
 }
