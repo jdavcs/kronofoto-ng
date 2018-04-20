@@ -1,3 +1,6 @@
-<p>
-  page works!
-</p>
+<ng-container *ngIf="page">
+
+  <h1>{{page.title}}</h1>
+  <p [innerHTML]="page.body"></p>
+
+</ng-container>
