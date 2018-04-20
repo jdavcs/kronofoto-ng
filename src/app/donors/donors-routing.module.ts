@@ -1,20 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DonorListComponent } from './donor-list.component';
+import { DonorsComponent } from './donors.component';
 
 const donorRoutes: Routes = [
-  { path: 'donors', component: DonorListComponent },
-  { path: 'donors/:id', redirectTo: 'donors/:id/items' }
+  { path: 'contribute', component: DonorsComponent }
 ]
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(donorRoutes)
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [ RouterModule.forChild(donorRoutes) ],
+  exports: [ RouterModule ]
 })
 export class DonorsRoutingModule {}
 

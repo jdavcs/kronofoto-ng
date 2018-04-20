@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule }        from '../shared.module';
 import { DonorsRoutingModule } from './donors-routing.module';
-import { DonorListComponent }  from './donor-list.component';
+import { DonorsComponent } from './donors.component';
 
 @NgModule({
   imports: [
@@ -11,9 +11,7 @@ import { DonorListComponent }  from './donor-list.component';
     DonorsRoutingModule,
     SharedModule
   ],
-  declarations: [
-    DonorListComponent
-  ]
+  declarations: [ DonorsComponent ]
 })
 export class DonorsModule { }
 

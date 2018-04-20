@@ -8,6 +8,11 @@ h1 {
   font-size: 1.6em;
 }
 
+h2 {
+  font-size: 1.4em;
+  border-bottom: 1px #ddd solid;
+}
+
 .fi-header-1 {
   padding: 10px 0 1px 0;
 
@@ -73,6 +78,11 @@ h1 {
     color: #007bff;
     text-decoration: none;
   }
+}
+
+.fi-donor-itemcount {
+  font-size: 0.9em;
+  color: #999;
 }
 
 

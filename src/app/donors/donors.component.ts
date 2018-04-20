@@ -4,30 +4,34 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
 
-import { Page } from './page';
-import { PageService } from './page.service';
+import { Page } from '../pages/page';
+import { PageService } from '../pages/page.service';
+import { Donor } from '../donors/donor';
+import { DonorService } from './donor.service';
 
 @Component({
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.scss']
+  templateUrl: './donors.component.html',
+  styleUrls: ['./donors.component.scss']
 })
-export class PageComponent implements OnInit {
+export class DonorsComponent implements OnInit {
   page: Page;
+  records: Donor[];
 
   constructor(
     private route: ActivatedRoute,
     private pageService: PageService,
+    private donorService: DonorService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.route.paramMap
-      .switchMap( (params: ParamMap) => {
-        return this.pageService.getPage(params.get('slug'));
-      })
+    this.pageService.getPage('contribute')
       .subscribe( 
         data => { this.page = data; },
         error => { this.router.navigate(['/404']); }
       );
+
+    this.donorService.getAllDonors()
+    .subscribe( data => this.records = data.body; );
   }
 }

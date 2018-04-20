@@ -1,0 +1,20 @@
+<ng-container *ngIf="page">
+  <h1>{{page.title}}</h1>
+  <p [innerHTML]="page.body"></p>
+</ng-container>
+
+<ng-container *ngIf="records && records.length">
+
+  <h2>Our Contributors</h2>
+
+  <p>We currently have {{records.length}} donors:
+
+  <ul>
+    <li *ngFor="let d of records">
+      {{d.firstName}} {{d.lastName}} 
+      <span class="fi-donor-itemcount">({{d.itemCount}} items)</span>
+    </li>
+  </ul>
+
+
+</ng-container>
