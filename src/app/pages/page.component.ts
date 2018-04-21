@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/rou
 import { Page } from './page';
 import { PageService } from './page.service';
 
+
 @Component({
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss']

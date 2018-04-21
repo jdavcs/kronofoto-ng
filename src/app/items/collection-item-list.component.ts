@@ -1,3 +1,6 @@
+import { share } from 'rxjs/operators';
+
+
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/combineLatest';
 import { Component, OnInit } from '@angular/core';
@@ -5,10 +8,17 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
 
+import { Collection } from '../collections/collection';
+import { CollectionService } from '../collections/collection.service';
 import { Item } from './item';
 import { ItemService } from './item.service';
 import { environment } from '../../environments/environment';
 import { PaginationData } from '../pagination/pagination-data';
+
+import 'rxjs/add/operator/publish';
+import 'rxjs/add/operator/filter';
+
+
 
 @Component({
   templateUrl: './collection-item-list.component.html',
@@ -16,35 +26,50 @@ import { PaginationData } from '../pagination/pagination-data';
 })
 export class CollectionItemListComponent implements OnInit {
   records: Item[][];
+  collection: Collection;
   pData: PaginationData;
-  collId: number;
 
   constructor(
     private route: ActivatedRoute,
     private itemService: ItemService,
+    private collectionService: CollectionService,
     private router: Router
   ) {}
 
   ngOnInit() {
     //get latest route + query params
-    Observable.combineLatest(
-      this.route.paramMap,
-      this.route.queryParamMap,
-      (params, qParams) => ({ params, qParams }))
-    //get data observable
+    const pubParams$ = Observable
+      .combineLatest(
+        this.route.paramMap,
+        this.route.queryParamMap,
+        (routeParams, queryParams) => ({ routeParams, queryParams }))
+      .publish();
+
+    //get collection (only if route parameter changes)
+    pubParams$
+      .filter( data => 
+        !this.collection || this.collection.id != getId(data.routeParams) )
+      .switchMap( data => 
+        this.collectionService.getCollection(getId(data.routeParams)) )
+      .subscribe( data => this.collection = data );
+
+    //get items
+    pubParams$
       .switchMap( data => {
-        const [offset, limit] = this.getPagingParams(data.qParams);
-        this.collId = +data.params.get('id');
-        return this.itemService.getCollectionItems(offset, limit, this.collId);
+        const [offset, limit] = this.getPagingParams(data.queryParams);
+        return this.itemService.getCollectionItems(offset, limit, getId(data.routeParams));
       })
-      //activate observable to call data service
       .subscribe( data => {
         this.loadPaginationData(data.headers);
         this.displayData(data.body);
       });
+
+    pubParams$.connect();
+
+    function getId(params: ParamMap): number { return +params.get('id');}
   }
 
-  //TODO this should move to a superclass.
+  //TODO this should move somewhere. 
   getPagingParams(queryParams: ParamMap) {
     const pageSize = +queryParams.get('pagesize');
     const pageNumber = +queryParams.get('page') || 1;
@@ -54,7 +79,7 @@ export class CollectionItemListComponent implements OnInit {
     return Array(offset, limit);
   }
 
-  //TODO this should move to a superclass.
+  //TODO this should move somewhere
   loadPaginationData(headers) {
     //TODO: add exception handling (there's no default values for total records)
     const totalRecords   = parseInt(headers.get(environment.pagination.headers.totalRecords));
@@ -85,7 +110,7 @@ export class CollectionItemListComponent implements OnInit {
 
   goToPage(pageNum: number) {
     const extras: NavigationExtras = { queryParams: {page: pageNum, pagesize: this.pData.pageSize} };
-    this.router.navigate(['/collection/' + this.collId + '/items'], extras);
+    this.router.navigate(['/collection/' + this.collection.id + '/items'], extras);
   }
 
   getImgSrc(item) {
@@ -99,8 +124,7 @@ export class CollectionItemListComponent implements OnInit {
       return String(item.yearMin);
     }
     else {
-      return 'b';
-      //return `circa ${item.yearMin}`; 
+      return `circa ${item.yearMin}`; 
     }
   }
 }
