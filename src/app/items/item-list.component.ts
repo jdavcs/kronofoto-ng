@@ -27,6 +27,13 @@ export class ItemListComponent implements OnInit {
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
         const [offset, limit] = this.getPagingParams(qParams);
+
+        //get filtering params and sort params
+
+
+
+
+
         return this.itemService.getItems(offset, limit);
       })
       .subscribe( data => {

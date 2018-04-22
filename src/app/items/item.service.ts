@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Item } from './item';
+import { ItemMetadata } from './item-metadata';
 
 @Injectable()
 export class ItemService {
@@ -34,6 +35,11 @@ export class ItemService {
     });
   }
 
+  getItemMetadata(identifier: string): Observable<ItemMetadata[]> {
+    const url = ItemService.READ_URL + '/' + identifier + '/metadata';
+    return this.http.get<ItemMetadata[]>(url);
+  }
+
   //refactor this
   getCollectionItems(
     offset: number = 0, 
@@ -48,6 +54,9 @@ export class ItemService {
 
     //dosesn't work
     params = params.append('filter[collection]', String(collId));
+
+    //TODO remove this later
+    params = params.append('sort', 'yearMin');
 
     return this.http.get<Item[]>(url, {
       params: params,

@@ -1,5 +1,35 @@
-<div *ngIf="item">
+<div *ngIf="item && metadata" class="fi-item-detail">
 
-  <img src="{{getImgSrc(item)}}">
+  <div class="fi-img">
+    <img class="img-fluid" src="{{getImgSrc(item)}}">
+  </div>
+
+  <div class="fi-info">
+
+    <a class="fi-download" href="">
+      Download original ({{metadata['image-width']}} x {{metadata['image-height']}}, 
+      {{metadata['file-size'] | fileSize }})
+    </a>
+
+    <p><span class="fi-label">Accession number:</span> {{item.identifier}}</p>
+
+    <p><span class="fi-label">Donated by:</span> John Smith
+    (<a href="">John Smith Collection</a>,  1880-1934, 25 items)</p>
+
+
+    <p><span class="fi-label">Year:</span> {{item.yearMin}}</p>
+
+
+    <p><span class="fi-label">Caption:</span> {{metadata.caption}}</p>
+    <p><span class="fi-label">Location:</span> Cedar Falls, IA</p>
+    <p><span class="fi-label">Subjects:</span> coming soon</p>
+    <p><span class="fi-label">Tags:</span> coming soon</p>
+  </div>
+
+  <div class="fi-forum">
+
+
+  </div>
+
 
 </div>

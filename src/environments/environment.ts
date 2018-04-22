@@ -21,6 +21,7 @@ export const environment = {
   items: {
     columns: 12,
     imgSuffix: '.jpg',
+    pathTo75: 'http://localhost/fortepan/thumbs/',
     pathTo400: 'http://localhost/fortepan/h400/',
     pathTo600: 'http://localhost/fortepan/w600/',
     pathTo700: 'http://localhost/fortepan/h700/'

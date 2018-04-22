@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
 
 import { Item } from './item';
+import { ItemMetadata } from './item-metadata';
 import { ItemService } from './item.service';
 import { environment } from '../../environments/environment';
 
@@ -11,6 +12,7 @@ import { environment } from '../../environments/environment';
 })
 export class ItemDetailComponent implements OnInit {
   item: Item;
+  metadata; //: Array<{number|string}>;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,15 +22,34 @@ export class ItemDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    this.route.paramMap
+
+    const pubParams$ = this.route.paramMap.publish();
+
+    pubParams$
       .switchMap( (params: ParamMap) => {
-        const identifier = params.get('identifier');
-        return this.itemService.getItem(identifier);
+        return this.itemService.getItem(getIdentifier(params));
       })
-      .subscribe( data => {
-        console.log(data);
-        this.item = data;
-      });
+      .subscribe( data => this.item = data );
+
+    pubParams$
+      .switchMap( (params: ParamMap) => {
+        return this.itemService.getItemMetadata(getIdentifier(params));
+      })
+      .subscribe( data => this.loadMetadata(data) );
+
+    pubParams$.connect();
+
+
+    function getIdentifier(params: ParamMap): string { return params.get('identifier');}
+  }
+
+  loadMetadata(metadata: ItemMetadata[]) {
+    this.metadata = Array();
+    for (let record of metadata) {
+      let key = record['element'];
+      let value = record['value'];
+      this.metadata[key] = value;
+    }
   }
 
   getImgSrc(item) {
