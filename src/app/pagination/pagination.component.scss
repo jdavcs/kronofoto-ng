@@ -1,6 +1,27 @@
 .fi-pagination {
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
+  margin-top: 10px;
   margin-bottom: 20px;
   font-size: 0.9em;
+  overflow: auto;
+
+  ul {
+    margin: 0;
+  }
+
+  button {
+    font-size: 1em;
+    box-shadow: none;
+  }
+
+  .fi-disabled {
+    color: #999;
+  }
+  .fi-disabled:hover {
+    background: none;
+  }
+
+  .fi-results {
+    float: left;
+    padding: .3rem .5rem;
+  }
 }

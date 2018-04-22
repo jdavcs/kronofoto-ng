@@ -1,19 +1,10 @@
+<h1>All Photos</h1>
+
 <ng-container *ngIf="records">
 
   <div class="row">
-    <div class="col-9">
+    <div class="col">
       <fi-pagination [data]="pData" (pageRequest)="goToPage($event)"></fi-pagination>
-    </div>
-    <div class="col-3">
-
-      sort by
-      <select>
-        <option>year
-        <option>collection
-        <option>date added
-
-      </select>
-      
     </div>
   </div>
 

@@ -1,20 +1,24 @@
-<div *ngIf="item && metadata" class="fi-item-detail">
+<div *ngIf="item && metadata && collection" class="fi-item-detail">
 
   <div class="fi-img">
-    <img class="img-fluid" src="{{getImgSrc(item)}}">
+    <img class="img-fluid" src="{{getImgSrc()}}">
   </div>
 
   <div class="fi-info">
 
-    <a class="fi-download" href="">
+    <a class="fi-download" href="{{getOriginalSrc()}}">
       Download original ({{metadata['image-width']}} x {{metadata['image-height']}}, 
       {{metadata['file-size'] | fileSize }})
     </a>
 
     <p><span class="fi-label">Accession number:</span> {{item.identifier}}</p>
 
-    <p><span class="fi-label">Donated by:</span> John Smith
-    (<a href="">John Smith Collection</a>,  1880-1934, 25 items)</p>
+    <p><span class="fi-label">Donated by:</span> 
+      {{collection.donorFirstName}} {{collection.donorLastName}}
+      (<a href="/collection/{{collection.id}}/items">{{collection.name}} Collection</a>,  
+      {{collection.yearMin | yearSpan : collection.yearMax}}, 
+      {{collection.itemCount}} items)
+    </p>
 
 
     <p><span class="fi-label">Year:</span> {{item.yearMin}}</p>
