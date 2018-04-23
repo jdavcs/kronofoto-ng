@@ -17,8 +17,6 @@ import { ItemService }      from './items/item.service';
 import { PageService }        from './pages/page.service';
 import { DonorService }        from './donors/donor.service';
 
-import { PhotoService } from './photo.service'; //TODO remove this
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -37,7 +35,6 @@ import { PhotoService } from './photo.service'; //TODO remove this
   providers: [ 
     ItemService,
     CollectionService,
-    PhotoService,
     PageService,
     DonorService
   ],

@@ -1,43 +1,26 @@
-import { Component } from '@angular/core';
-import { PhotoService } from './photo.service';
+import { Component, OnInit } from '@angular/core';
+
+import { Item } from './items/item';
+import { ItemService } from './items/item.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
-  prevPhotoUrl: string;
-  currentPhotoUrl: string;
-  nextPhotoUrl: string;
-  private photoPath = "/assets/tmp-archive/";
+export class HomeComponent implements OnInit {
+  item: Item;
 
-  constructor(private photoService: PhotoService) {
-    this.initPhotos();
+  constructor(private itemService: ItemService) {}
+
+  ngOnInit() {
+    this.itemService.getRandomFeaturedItem()
+      .subscribe( data => this.item = data );
   }
-
-  private initPhotos() {
-    this.prevPhotoUrl = this.photoPath + "9.jpg";
-    this.currentPhotoUrl = this.photoPath + "0.jpg";
-    this.nextPhotoUrl = this.photoPath + "1.jpg";
-  }
-
-  setPrevPhoto() {
-    return {'background-image': 'url(' + this.prevPhotoUrl};
-  }
-
-  setNextPhoto() {
-    return {'background-image': 'url(' + this.nextPhotoUrl};
-  }
-
-  clickedRight(): void {
-    const photos = this.getPhotos();
-  }
-
-  getPhotos(): void {
-    const photos = this.photoService.getPhotos();
-    this.prevPhotoUrl = this.photoPath + photos['prev'];
-    this.currentPhotoUrl = this.photoPath + photos['curr'];
-    this.nextPhotoUrl = this.photoPath + photos['next'];
+ 
+  getImgSrc() {
+    return environment.items.pathTo700 + this.item.identifier + 
+      '_x700' + environment.items.imgSuffix;
   }
 }

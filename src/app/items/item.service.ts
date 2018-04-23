@@ -18,6 +18,11 @@ export class ItemService {
     return this.http.get<Item>(url);
   }
 
+  getRandomFeaturedItem(): Observable<Item> {
+    const url = ItemService.READ_URL + '/random';
+    return this.http.get<Item>(url);
+  }
+
   getItems(
     offset: number = 0, 
     limit: number = ItemService.DEFAULT_PAGE_SIZE
