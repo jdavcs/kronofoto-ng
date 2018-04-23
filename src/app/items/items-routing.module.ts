@@ -4,13 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { ItemDetailComponent }         from './item-detail.component';
 import { ItemListComponent }           from './item-list.component';
 import { CollectionItemListComponent } from './collection-item-list.component';
-import { DonorItemListComponent }      from './donor-item-list.component';
 
 const itemRoutes: Routes = [
   { path: 'items', component: ItemListComponent },
   { path: 'item/:identifier', component: ItemDetailComponent },
-  { path: 'collection/:id/items', component: CollectionItemListComponent },
-  { path: 'donor/:id/items', component: DonorItemListComponent }
+  { path: 'collection/:id/items', component: CollectionItemListComponent }
 ]
 
 @NgModule({

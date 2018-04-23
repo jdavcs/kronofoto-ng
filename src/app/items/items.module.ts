@@ -6,7 +6,6 @@ import { ItemsRoutingModule }          from './items-routing.module';
 import { ItemDetailComponent }         from './item-detail.component';
 import { ItemListComponent }           from './item-list.component';
 import { CollectionItemListComponent } from './collection-item-list.component';
-import { DonorItemListComponent }      from './donor-item-list.component';
 
 @NgModule({
   imports: [
@@ -17,7 +16,6 @@ import { DonorItemListComponent }      from './donor-item-list.component';
   declarations: [
     ItemListComponent,
     CollectionItemListComponent,
-    DonorItemListComponent,
     ItemDetailComponent
   ]
 })
