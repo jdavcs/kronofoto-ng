@@ -1,4 +1,5 @@
-<div class="container">
+<!--<div class="container">-->
+<div [ngClass]="{'container': !isFluid, 'container-fluid': isFluid}">
   <div class="row fi-header-1">
     <div class="col-3">
       <a href="/">
@@ -21,7 +22,7 @@
 
 <div class="container-fluid fi-header-2"></div>
 
-<div class="container">
+<div [ngClass]="{'container': !isFluid, 'container-fluid': isFluid}">
   <div class="row fi-content">
     <div class="col">
       <router-outlet></router-outlet>
@@ -32,6 +33,9 @@
     <div class="col">All images are available for free download under the 
       <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons 
         (CC-BY-SA 4.0 International) Public License</a>. 
+      <button class="btn btn-link fi-switch-layout" (click)="switchLayout()">switch to {{newLayout}} layout</button>
     </div>
   </div>
 </div>
+
+
