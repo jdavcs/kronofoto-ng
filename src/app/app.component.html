@@ -16,9 +16,13 @@
           <li><a routerLinkActive="active" routerLink="/about">About</a></li>
         </ul>
       </nav>
+
+      <button class="btn btn-link fi-switch-layout" (click)="switchLayout()">Switch to {{newLayout}} layout</button>
+
     </div>
   </div>
 </div>
+
 
 <div class="container-fluid fi-header-2"></div>
 
@@ -33,7 +37,6 @@
     <div class="col">All images are available for free download under the 
       <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons 
         (CC-BY-SA 4.0 International) Public License</a>. 
-      <button class="btn btn-link fi-switch-layout" (click)="switchLayout()">switch to {{newLayout}} layout</button>
     </div>
   </div>
 </div>

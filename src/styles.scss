@@ -1,3 +1,6 @@
+@import "~variables.scss";
+
+
 body {
   background: #fff;
   color: #555;
@@ -5,7 +8,8 @@ body {
 }
 
 h1 {
-  font-size: 1.6em;
+  font-size: 2em;
+  color: #777;
 }
 
 h2 {
@@ -31,13 +35,32 @@ h2 {
     }
 
     a {
-      color: #9e9779;
+      color: $fortepan;
     }
 
     .active {
       color: #666;
     }
   }
+
+  .fi-switch-layout {
+    display: block;
+    position: absolute;
+    right: 0;
+    margin-right: .9rem;
+    margin-top: -3rem;
+    font-size: 0.8em;
+    text-decoration: none;
+    color: #aaa;
+    padding: .1rem .4rem;
+    border-radius: 2px;
+  }
+
+  .fi-switch-layout:hover {
+    color: $saddlebrown;
+    background: $gray1;
+  }
+
 }
 
 .fi-header-2 {
@@ -55,21 +78,12 @@ h2 {
     color: #999;
   }
   a:hover {
-    color: #007bff;
-  }
-
-  .fi-switch-layout {
-    display: block;
-    float: right;
-    padding: 0;
-    font-size: 1em;
-    text-decoration: underline;
-    color: #aaa;
+    color: $saddlebrown;
   }
 }
 
 .fi-content {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .fi-gallery-collection {
@@ -77,21 +91,29 @@ h2 {
 
   figure {
   }
+
   figcaption {
     font-size: .8rem;
   }
+
   img {
     border: 1px #ddd solid;
     background: #fff;
     padding: 5px;
     border-radius: 2px;
   }
+
+  img:hover {
+    border-color: $saddlebrown;
+    border-color: #aaa;
+  }
+
   a {
     color: #666;
   }
 
   a:hover {
-    color: #007bff;
+    color: $saddlebrown;
     text-decoration: none;
   }
 }
@@ -102,6 +124,8 @@ h2 {
 }
 
 .fi-item-detail {
+
+  margin-top: 20px;
 
   .fi-img {
     text-align:center;

@@ -15,16 +15,16 @@ export const environment = {
   },
   collections: {
     columns: 12,
-    pathToFeatured: 'http://localhost/fortepan/featured_600x450/',
+    pathToFeatured: 'http://134.161.122.73:8080/archive/featured_600x450/',
     imgSuffix: '_600x450.jpg'
   },
   items: {
     columns: 12,
-    imgSuffix:     '.jpg',
-    pathTo75:      'http://localhost/fortepan/thumbs/',
-    pathTo400:     'http://localhost/fortepan/h400/',
-    pathTo600:     'http://localhost/fortepan/w600/',
-    pathTo700:     'http://localhost/fortepan/h700/',
-    pathToOriginal: 'http://localhost/fortepan/originals/'
+    imgSuffix:      '.jpg',
+    pathTo75:       'http://134.161.122.73:8080/archive/thumbs/',
+    pathTo400:      'http://134.161.122.73:8080/archive/h400/',
+    pathTo600:      'http://134.161.122.73:8080/archive/w600/',
+    pathTo700:      'http://134.161.122.73:8080/archive/h700/',
+    pathToOriginal: 'http://134.161.122.73:8080/archive/originals/'
   }
 };

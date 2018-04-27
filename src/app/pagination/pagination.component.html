@@ -1,48 +1,57 @@
-<div class="fi-pagination">
+<div class="fi-pagination row">
 
-  <div class="fi-results">
-    Results {{data.firstRecord}} - {{data.lastRecord}} of {{data.totalRecords}}
+  <div class="fi-results col-sm-12">
+
+    <div class="wrapper">
+
+      <span class="results">Items {{data.firstRecord}} - {{data.lastRecord}} of {{data.totalRecords}}</span>
+
+      <nav class="nav-pages" aria-label="pages" *ngIf="data.totalPages > 1">
+        <ul class="pagination pagination-sm">
+          <li class="page-item">
+            <button 
+              class="page-link" 
+              [ngClass]="{'fi-disabled': data.currentPageNumber === 1}" 
+              [disabled]="data.currentPageNumber === 1" 
+              (click)="firstPage()">
+              first
+            </button>
+          </li>
+          <li class="page-item">
+            <button 
+              class="page-link" 
+              [ngClass]="{'fi-disabled': data.currentPageNumber === 1}" 
+              [disabled]="data.currentPageNumber === 1" 
+              (click)="prevPage()">
+              previous
+            </button>
+          </li>
+          <li class="page-item">
+            <button 
+              class="page-link" 
+              [ngClass]="{'fi-disabled': data.currentPageNumber === data.totalPages}" 
+              [disabled]="data.currentPageNumber === data.totalPages" 
+              (click)="nextPage()">
+              next
+            </button>
+          </li>
+          <li class="page-item">
+            <button 
+              class="page-link" 
+              [ngClass]="{'fi-disabled': data.currentPageNumber === data.totalPages}" 
+              [disabled]="data.currentPageNumber === data.totalPages" 
+              (click)="lastPage()">
+              last
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <span class="pagesize" *ngIf="data.totalPages > 1">Show 20 | <a href="">50</a> | <a href="">100</a></span>
+
+
+    </div>
+
   </div>
-
-  <nav aria-label="pages" *ngIf="data.totalPages > 1">
-    <ul class="pagination pagination-sm">
-      <li class="page-item">
-        <button 
-          class="page-link" 
-          [ngClass]="{'fi-disabled': data.currentPageNumber === 1}" 
-          [disabled]="data.currentPageNumber === 1" 
-          (click)="firstPage()">
-          first
-        </button>
-      </li>
-      <li class="page-item">
-        <button 
-          class="page-link" 
-          [ngClass]="{'fi-disabled': data.currentPageNumber === 1}" 
-          [disabled]="data.currentPageNumber === 1" 
-          (click)="prevPage()">
-          previous
-        </button>
-      </li>
-      <li class="page-item">
-        <button 
-          class="page-link" 
-          [ngClass]="{'fi-disabled': data.currentPageNumber === data.totalPages}" 
-          [disabled]="data.currentPageNumber === data.totalPages" 
-          (click)="nextPage()">
-          next
-        </button>
-      </li>
-      <li class="page-item">
-        <button 
-          class="page-link" 
-          [ngClass]="{'fi-disabled': data.currentPageNumber === data.totalPages}" 
-          [disabled]="data.currentPageNumber === data.totalPages" 
-          (click)="lastPage()">
-          last
-        </button>
-      </li>
-    </ul>
-  </nav>
 
 </div>
