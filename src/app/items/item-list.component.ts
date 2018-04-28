@@ -86,6 +86,11 @@ export class ItemListComponent implements OnInit {
     this.router.navigate(['/items'], extras);
   }
 
+  changePageSize(size: number) {
+    const extras: NavigationExtras = { queryParams: {page: 1, pagesize: size } };
+    this.router.navigate(['/items'], extras);
+  }
+
   getImgSrc(item) {
     return environment.items.pathTo600 + 
       item.identifier + environment.items.imgSuffix;

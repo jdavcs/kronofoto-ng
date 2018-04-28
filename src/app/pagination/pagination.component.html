@@ -47,8 +47,17 @@
         </ul>
       </nav>
 
-      <span class="pagesize" *ngIf="data.totalPages > 1">Show 20 | <a href="">50</a> | <a href="">100</a></span>
+      <span class="pagesize-label" *ngIf="data.totalPages > 1"> 
+        Display
+      </span>
+      <span class="pagesize-list" *ngIf="data.totalPages > 1"> 
+        <select (change)="pageSize($event.target.value)" class="custom-select">
+          <option selected>20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
 
+      </span>
 
     </div>
 

@@ -81,6 +81,11 @@ export class CollectionListComponent implements OnInit {
     this.router.navigate(['/collections'], extras);
   }
 
+  changePageSize(size: number) {
+    const extras: NavigationExtras = { queryParams: {page: 1, pagesize: size } };
+    this.router.navigate(['/collections'], extras);
+  }
+
   getImgSrc(coll: Collection) {
     return environment.collections.pathToFeatured + 
       coll.featuredItemIdentifier + environment.collections.imgSuffix;

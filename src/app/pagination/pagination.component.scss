@@ -3,7 +3,7 @@
 .fi-pagination {
   margin-top: 10px;
   margin-bottom: 20px;
-  font-size: 0.9em;
+  font-size: 0.85rem;
   overflow: auto;
 
   .results {
@@ -21,10 +21,25 @@
     padding-right: .5rem;
   }
 
-  .pagesize {
+  .pagesize-label {
     padding-left: 1rem;
-    padding-top: .3em;
+    padding-right: .3rem;
+  }
+
+  .pagesize-list {
+    padding-top: 0;
     display: inline-block;
+
+    select {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      height: inherit;
+      background-color: $gray1;
+    }
+
+    select:hover {
+      background-color: #fff;
+    }
   }
 
   a {

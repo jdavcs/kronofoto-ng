@@ -9,8 +9,13 @@ import { PaginationData } from './pagination-data';
 export class PaginationComponent implements OnInit {
   @Input() data: PaginationData;
   @Output() pageRequest = new EventEmitter<number>();
+  @Output() pageSizeRequest = new EventEmitter<number>();
 
   ngOnInit() {}
+
+  pageSize(size: number) {
+    this.pageSizeRequest.emit(size);
+  }
 
   firstPage() {
     this.pageRequest.emit(1);

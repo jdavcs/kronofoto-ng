@@ -113,6 +113,11 @@ export class CollectionItemListComponent implements OnInit {
     this.router.navigate(['/collection/' + this.collection.id + '/items'], extras);
   }
 
+  changePageSize(size: number) {
+    const extras: NavigationExtras = { queryParams: {page: 1, pagesize: size } };
+    this.router.navigate(['/collection/' + this.collection.id + '/items'], extras);
+  }
+
   getImgSrc(item) {
     return environment.items.pathTo600 + 
       item.identifier + environment.items.imgSuffix;
