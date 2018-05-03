@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PaginationComponent } from './pagination.component';
-import { Pager } from './pager';
+//import { Pager } from './pager';
 //import { Component, OnInit, Input } from '@angular/core';
 
 describe('PaginationComponent', () => {

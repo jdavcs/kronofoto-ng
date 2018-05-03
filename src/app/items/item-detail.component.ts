@@ -63,12 +63,12 @@ export class ItemDetailComponent implements OnInit {
   }
 
   getOriginalSrc() {
-    return environment.items.pathToOriginal + 
+    return environment.media.baseUrl + environment.items.pathToOriginal + 
       this.item.identifier + environment.items.imgSuffix;
   }
 
   getImgSrc() {
-    return environment.items.pathTo700 + 
+    return environment.media.baseUrl + environment.items.pathTo700 + 
       this.item.identifier + '_x700' + environment.items.imgSuffix;
   }
 }

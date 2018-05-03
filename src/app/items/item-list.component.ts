@@ -92,7 +92,7 @@ export class ItemListComponent implements OnInit {
   }
 
   getImgSrc(item) {
-    return environment.items.pathTo600 + 
+    return environment.media.baseUrl + environment.items.pathTo600 + 
       item.identifier + environment.items.imgSuffix;
   }
 

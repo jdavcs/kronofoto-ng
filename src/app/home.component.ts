@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   }
  
   getImgSrc() {
-    return environment.items.pathTo700 + this.item.identifier + 
+    return environment.media.baseUrl + environment.items.pathTo700 + this.item.identifier + 
       '_x700' + environment.items.imgSuffix;
   }
 }

@@ -87,7 +87,8 @@ export class CollectionListComponent implements OnInit {
   }
 
   getImgSrc(coll: Collection) {
-    return environment.collections.pathToFeatured + 
+    return environment.media.baseUrl + 
+      environment.collections.pathToFeatured + 
       coll.featuredItemIdentifier + environment.collections.imgSuffix;
   }
 }
