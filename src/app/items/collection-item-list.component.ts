@@ -1,12 +1,12 @@
-import { share } from 'rxjs/operators';
-
-
-import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/combineLatest';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/publish';
+import 'rxjs/add/operator/switchMap';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
+import { share } from 'rxjs/operators';
 
 import { Collection } from '../collections/collection';
 import { CollectionService } from '../collections/collection.service';
@@ -14,11 +14,6 @@ import { Item } from './item';
 import { ItemService } from './item.service';
 import { environment } from '../../environments/environment';
 import { PaginationData } from '../pagination/pagination-data';
-
-import 'rxjs/add/operator/publish';
-import 'rxjs/add/operator/filter';
-
-
 
 @Component({
   templateUrl: './collection-item-list.component.html',
@@ -57,7 +52,7 @@ export class CollectionItemListComponent implements OnInit {
     pubParams$
       .switchMap( data => {
         const [offset, limit] = this.getPagingParams(data.queryParams);
-        return this.itemService.getCollectionItems(offset, limit, getId(data.routeParams));
+        return this.itemService.getCollectionItems(getId(data.routeParams), offset, limit);
       })
       .subscribe( data => {
         this.loadPaginationData(data.headers);

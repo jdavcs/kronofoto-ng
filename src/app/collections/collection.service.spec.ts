@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -7,10 +7,14 @@ import { Collection } from './collection';
 
 
 describe('CollectionService', () => {
-  let httpClient: HttpClient;
-  let httpMock: HttpTestingController;
+  let httpTestingController: HttpTestingController;
   let collectionService: CollectionService;
   let sampleCollection: Collection;
+
+  //matches a GET request by url
+  const requestMatcher: boolean = function(req: HttpRequest<any>, url: string) {
+    return req.method === 'GET' && req.url === url;
+  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,8 +22,7 @@ describe('CollectionService', () => {
       providers: [ CollectionService ]
     });
 
-    httpClient = TestBed.get(HttpClient);
-    httpMock = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.get(HttpTestingController);
     collectionService = TestBed.get(CollectionService);
 
     sampleCollection = {
@@ -39,7 +42,7 @@ describe('CollectionService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify();
+    httpTestingController.verify();
   });
 
   it('Should be created', () => {
@@ -48,7 +51,7 @@ describe('CollectionService', () => {
 
   it('Should return one Collection object', () => {
     const expected: Collection = sampleCollection;
-    const fakeId = 42;
+    const fakeId: number = 42;
 
     collectionService.getCollection(fakeId).subscribe(
       data => expect(data).toEqual(expected),
@@ -56,12 +59,25 @@ describe('CollectionService', () => {
     );
 
     const url = CollectionService.READ_URL + '/' + fakeId;
-    const req = httpMock.expectOne(url);
-    expect(req.request.method).toEqual('GET');
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
+    req.flush(expected); 
+  });
+
+  it('Should return an array of Collection objects', () => {
+    const expected: Collection[] = [ sampleCollection, sampleCollection ];
+
+    //offset and limit don't matter in this test >> use undefined
+    collectionService.getCollections(undefined, undefined).subscribe(
+      data => expect(data.body).toEqual(expected),
+      fail
+    );
+
+    const url = CollectionService.READ_URL;
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
     req.flush(expected);
   });
 
-  it('Should return an array of Collection objects using parameters', () => {
+  it('Should send correct parameters', () => {
     const expected: Collection[] = [ sampleCollection, sampleCollection ];
 
     const offset: number = 17;
@@ -73,13 +89,12 @@ describe('CollectionService', () => {
     );
 
     const url = CollectionService.READ_URL;
-    const req = httpMock.expectOne(req => req.method === 'GET' && req.url === url); 
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
 
     let expectedParams = new HttpParams();
     expectedParams = expectedParams.append('offset', String(offset));
     expectedParams = expectedParams.append('limit', String(limit));
 
-    expect(String(expectedParams)).toEqual(String(req.request.params));
     expect(String(offset)).toEqual(req.request.params.get('offset'));
     expect(String(limit)).toEqual(req.request.params.get('limit'));
 
@@ -96,21 +111,18 @@ describe('CollectionService', () => {
       );
 
       const url = CollectionService.READ_URL;
-      const req = httpMock.expectOne(req => req.method === 'GET' && req.url === url); 
+      const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
 
-      //we won't use these as numbers
-      const defaultOffset: string = '0';
-      const defaultLimit: string = String(CollectionService.DEFAULT_PAGE_SIZE);
+      const defaultOffset: number = 0;
+      const defaultLimit: number = CollectionService.DEFAULT_PAGE_SIZE;
 
       let expectedParams = new HttpParams();
       expectedParams = expectedParams.append('offset', defaultOffset);
       expectedParams = expectedParams.append('limit', defaultLimit);
 
-      expect(String(expectedParams)).toEqual(String(req.request.params));
-      expect(defaultOffset).toEqual(req.request.params.get('offset'));
-      expect(defaultLimit).toEqual(req.request.params.get('limit'));
+      expect(String(defaultOffset)).toEqual(req.request.params.get('offset'));
+      expect(String(defaultLimit)).toEqual(req.request.params.get('limit'));
 
       req.flush(expected);
     });
 });
-

@@ -1,16 +1,22 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { ItemService } from './item.service';
-import { Item} from './item';
+import { Item } from './item';
+import { ItemMetadata } from './item-metadata';
 
 
 describe('ItemService', () => {
-  let httpClient: HttpClient;
-  let httpMock: HttpTestingController;
+  let httpTestingController: HttpTestingController;
   let itemService: ItemService;
   let sampleItem: Item;
+  let sampleItemMetadata: ItemMetadata;
+
+  //matches a GET request by url (TODO: redundant, move)
+  const requestMatcher: boolean = function(req: HttpRequest<any>, url: string) {
+    return req.method === 'GET' && req.url === url;
+  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -18,8 +24,7 @@ describe('ItemService', () => {
       providers: [ ItemService ]
     });
 
-    httpClient = TestBed.get(HttpClient);
-    httpMock = TestBed.get(HttpTestingController);
+    httpTestingController = TestBed.get(HttpTestingController);
     itemService = TestBed.get(ItemService);
 
     sampleItem = {
@@ -34,19 +39,26 @@ describe('ItemService', () => {
       created: new Date(),
       modified: new Date(),
     }
+
+    sampleItemMetadata = {
+      value: 'Enterprise',
+      elementId: 1701,
+      element: 'starship'
+    }
   });
 
   afterEach(() => {
-    httpMock.verify();
+    httpTestingController.verify();
   });
 
   it('Should be created', () => {
     expect(itemService).toBeTruthy();
   });
 
+
   it('Should return one Item object', () => {
     const expected: Item = sampleItem;
-    const fakeId = 42;
+    const fakeId: number = 42;
 
     itemService.getItem(fakeId).subscribe(
       data => expect(data).toEqual(expected),
@@ -54,16 +66,30 @@ describe('ItemService', () => {
     );
 
     const url = ItemService.READ_URL + '/' + fakeId;
-    const req = httpMock.expectOne(url);
-    expect(req.request.method).toEqual('GET');
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
     req.flush(expected);
   });
 
-  it('Should return an array of Item objects using parameters', () => {
+  it('Should return an array of Item objects', () => {
     const expected: Item[] = [ sampleItem, sampleItem ];
 
-    const offset: number = 10;
-    const limit: number = 25;
+    const fakeParam = 42;
+    itemService.getItems(fakeParam, fakeParam).subscribe(
+      data => expect(data.body).toEqual(expected),
+      fail
+    );
+
+    const url = ItemService.READ_URL;
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
+    req.flush(expected);
+  });
+
+
+  it('Should send correct parameters', () => {
+    const expected: Item[] = [ sampleItem, sampleItem ];
+
+    const offset: number = 17;
+    const limit: number = 42;
 
     itemService.getItems(offset, limit).subscribe(
       data => expect(data.body).toEqual(expected),
@@ -71,20 +97,17 @@ describe('ItemService', () => {
     );
 
     const url = ItemService.READ_URL;
-    const req = httpMock.expectOne(req => req.method === 'GET' && req.url === url); 
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
 
     let expectedParams = new HttpParams();
     expectedParams = expectedParams.append('offset', String(offset));
     expectedParams = expectedParams.append('limit', String(limit));
-
-    expect(String(expectedParams)).toEqual(String(req.request.params));
     expect(String(offset)).toEqual(req.request.params.get('offset'));
     expect(String(limit)).toEqual(req.request.params.get('limit'));
-
     req.flush(expected);
   });
 
-  it('If no parameters supplied, should return an array of Item objects ' +
+  it('If no parameters supplied, should return an array of Collection objects ' +
     'using default parameters', () => {
       const expected: Item[] = [ sampleItem, sampleItem ];
 
@@ -94,23 +117,62 @@ describe('ItemService', () => {
       );
 
       const url = ItemService.READ_URL;
-      const req = httpMock.expectOne(req => req.method === 'GET' && req.url === url); 
+      const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
 
-      //we won't use these as numbers
-      const defaultOffset: string = '0';
-      const defaultLimit: string = String(ItemService.DEFAULT_PAGE_SIZE);
+      const defaultOffset: number = 0;
+      const defaultLimit: number = ItemService.DEFAULT_PAGE_SIZE;
 
       let expectedParams = new HttpParams();
       expectedParams = expectedParams.append('offset', defaultOffset);
       expectedParams = expectedParams.append('limit', defaultLimit);
-
-      expect(String(expectedParams)).toEqual(String(req.request.params));
-      expect(defaultOffset).toEqual(req.request.params.get('offset'));
-      expect(defaultLimit).toEqual(req.request.params.get('limit'));
-
+      expect(String(defaultOffset)).toEqual(req.request.params.get('offset'));
+      expect(String(defaultLimit)).toEqual(req.request.params.get('limit'));
       req.flush(expected);
     });
+
+  it('should return one random Item object', () => {
+    const expected: Item = sampleItem;
+
+    itemService.getRandomFeaturedItem().subscribe(
+      data => expect(data).toEqual(expected),
+      fail
+    );
+
+    const url = ItemService.READ_URL + '/random';
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
+    req.flush(expected);
+  });
+
+  it('Should return an array of ItemMetadata objects', () => {
+
+    const expected: ItemMetadata[] = [ sampleItemMetadata,  sampleItemMetadata ];
+    const fakeId = 'xx';
+
+    itemService.getItemMetadata(fakeId).subscribe(
+      data => expect(data).toEqual(expected),
+      fail
+    );
+
+    const url = `${ItemService.READ_URL}/${fakeId}/metadata`;
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
+    req.flush(expected);
+  });
+
+  it('Should return an array of Item objects belonging to a collection', () => {
+    const expected: Item[] = [ sampleItem, sampleItem ];
+    const fakeId: number = 42;
+
+    itemService.getCollectionItems(fakeId).subscribe(
+      data => expect(data.body).toEqual(expected),
+      fail
+    );
+
+    const url = '/api/items';
+    const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
+
+    let expectedParams = new HttpParams();
+    expectedParams = expectedParams.append('filter[collection]', fakeId);
+    expect(String(fakeId)).toEqual(req.request.params.get('filter[collection]'));
+    req.flush(expected);
+  });
 });
-
-
-

@@ -32,6 +32,6 @@ export class DonorsComponent implements OnInit {
       );
 
     this.donorService.getAllDonors()
-    .subscribe( data => this.records = data.body );
+    .subscribe( data => this.records = data );
   }
 }

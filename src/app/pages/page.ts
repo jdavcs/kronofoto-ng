@@ -5,5 +5,4 @@ export interface Page {
   readonly body: string;
   readonly created: Date;
   readonly modified: Date;
-
 }

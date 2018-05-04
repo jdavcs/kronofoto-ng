@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     this.itemService.getRandomFeaturedItem()
       .subscribe( data => this.item = data );
   }
- 
+
   getImgSrc() {
     return environment.media.baseUrl + environment.items.pathTo700 + this.item.identifier + 
       '_x700' + environment.items.imgSuffix;

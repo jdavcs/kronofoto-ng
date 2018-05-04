@@ -47,9 +47,9 @@ export class ItemService {
 
   //refactor this
   getCollectionItems(
+    collId: number,
     offset: number = 0, 
-    limit: number = ItemService.DEFAULT_PAGE_SIZE,
-    collId: number
+    limit: number = ItemService.DEFAULT_PAGE_SIZE
   ): Observable<HttpResponse<Item[]>> {
     let url = ItemService.READ_URL;
 

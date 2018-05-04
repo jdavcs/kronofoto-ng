@@ -22,7 +22,6 @@ export class CollectionService {
     return this.http.get<Collection>(url);
   }
 
-
   getCollections(
     offset: number = 0, 
     limit: number = CollectionService.DEFAULT_PAGE_SIZE

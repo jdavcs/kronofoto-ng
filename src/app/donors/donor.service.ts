@@ -12,19 +12,12 @@ export class DonorService {
 
   constructor(private http: HttpClient) {} 
 
-  getAllDonors(
-    offset: number = 0, 
-    limit: number = DonorService.DEFAULT_PAGE_SIZE
-  ): Observable<HttpResponse<Donor[]>> {
+  getAllDonors(): Observable<Donor[]> {
     let url = DonorService.READ_URL;
 
     let params = new HttpParams();
     params = params.append('sort', 'firstName');
 
-    return this.http.get<Donor[]>(url, {
-      params: params,
-      observe: 'response' //because we need the headers returned by the API
-    });
+    return this.http.get<Donor[]>(url, { params: params });
   }
 }
-
