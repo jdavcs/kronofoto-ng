@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpRequest, HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -12,11 +12,12 @@ describe('ItemService', () => {
   let itemService: ItemService;
   let sampleItem: Item;
   let sampleItemMetadata: ItemMetadata;
-
-  //matches a GET request by url (TODO: redundant, move)
-  const requestMatcher: boolean = function(req: HttpRequest<any>, url: string) {
-    return req.method === 'GET' && req.url === url;
-  }
+  //
+  //matches a GET request by url
+  const requestMatcher = 
+    function(req: HttpRequest<any>, url: string): boolean {
+      return req.method === 'GET' && req.url === url;
+    }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -119,8 +120,8 @@ describe('ItemService', () => {
       const url = ItemService.READ_URL;
       const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
 
-      const defaultOffset: number = 0;
-      const defaultLimit: number = ItemService.DEFAULT_PAGE_SIZE;
+      const defaultOffset: string = '0';
+      const defaultLimit: string = String(ItemService.DEFAULT_PAGE_SIZE);
 
       let expectedParams = new HttpParams();
       expectedParams = expectedParams.append('offset', defaultOffset);
@@ -171,7 +172,7 @@ describe('ItemService', () => {
     const req = httpTestingController.expectOne(r => requestMatcher(r, url)); 
 
     let expectedParams = new HttpParams();
-    expectedParams = expectedParams.append('filter[collection]', fakeId);
+    expectedParams = expectedParams.append('filter[collection]', String(fakeId));
     expect(String(fakeId)).toEqual(req.request.params.get('filter[collection]'));
     req.flush(expected);
   });

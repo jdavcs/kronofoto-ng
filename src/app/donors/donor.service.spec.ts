@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpRequest, HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -12,9 +12,10 @@ describe('DonorService', () => {
   let sampleDonor: Donor;
 
   //matches a GET request by url
-  const requestMatcher: boolean = function(req: HttpRequest<any>, url: string) {
-    return req.method === 'GET' && req.url === url;
-  }
+  const requestMatcher = 
+    function(req: HttpRequest<any>, url: string): boolean {
+      return req.method === 'GET' && req.url === url;
+    }
 
   beforeEach(() => {
     TestBed.configureTestingModule({

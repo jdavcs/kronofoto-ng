@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpRequest, HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
@@ -12,9 +12,10 @@ describe('PageService', () => {
   let samplePage: Page;
 
   //matches a GET request by url
-  const requestMatcher: boolean = function(req: HttpRequest<any>, url: string) {
-    return req.method === 'GET' && req.url === url;
-  }
+  const requestMatcher = 
+    function(req: HttpRequest<any>, url: string): boolean {
+      return req.method === 'GET' && req.url === url;
+    }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,8 +43,8 @@ describe('PageService', () => {
   it('Should be created', () => {
     expect(pageService).toBeTruthy();
   });
-  it('Should return an array of page objects', () => {
-    const expected: page = samplePage;
+  it('Should return a page object', () => {
+    const expected: Page = samplePage;
     const slug = 'foo';
 
     pageService.getPage(slug).subscribe(
