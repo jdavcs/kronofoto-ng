@@ -6,7 +6,7 @@ manage a digital archive like Fortepan Iowa:
 
 * kronofoto-ng (public front-end)
 * [kronofoto-api](https://github.com/ic4f/kronofoto-api) (API consumed by a web-based front-end) 
-* kronofoto-admin (web-based archive management system)
+* [kronofoto-admin](https://github.com/ic4f/kronofoto-admin) (web-based archive management system)
 
 ### Expected Release 
 Currently, kronofoto-ng is in pre-alpha state; however, it is operational ([current demo version
