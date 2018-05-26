@@ -9,9 +9,7 @@ manage a digital archive like Fortepan Iowa:
 * [kronofoto-admin](https://github.com/ic4f/kronofoto-admin) (web-based archive management system)
 
 ### Expected Release 
-Currently, kronofoto-ng is in pre-alpha state; however, it is operational ([current demo version
-available here](http://sergey.cs.uni.edu:8080/public/collections)). I expect to have it ready for an
-alpha release this summer.
+Currently, kronofoto-ng is in pre-alpha state. I expect to have it ready for an alpha release this summer.
 
 ### Customization and Other Collections
 Although built for Fortepan Iowa, kronofoto-ng is designed to be (mostly) collection-agnostic and
