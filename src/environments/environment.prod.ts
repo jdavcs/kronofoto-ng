@@ -14,7 +14,7 @@ export const environment = {
     pageSizeParameter: 'pagesize'
   },
   media: {
-    baseUrl: 'http://134.161.122.73:8080/archive'
+    baseUrl: 'http://134.161.122.73/kronofoto/archive'
   },
   collections: {
     columns: 12,
@@ -24,10 +24,13 @@ export const environment = {
   items: {
     columns: 12,
     imgSuffix:      '.jpg',
-    pathTo75:       '/archive/thumbs/',
-    pathTo400:      '/archive/h400/',
-    pathTo600:      '/archive/w600/',
-    pathTo700:      '/archive/h700/',
-    pathToOriginal: '/archive/originals/'
+    pathTo75:       '/thumbs/',
+    pathTo400:      '/h400/',
+    pathTo600:      '/w600/',
+    pathTo700:      '/h700/',
+    pathToOriginal: '/originals/'
+  },
+  api: {
+    urlPrefix: '/kronofoto';
   }
 };

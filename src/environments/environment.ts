@@ -29,5 +29,8 @@ export const environment = {
     pathTo600:      '/w600/',
     pathTo700:      '/h700/',
     pathToOriginal: '/originals/'
+  },
+  api: {
+    urlPrefix: '';
   }
 };

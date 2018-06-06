@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Collection } from './collection';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class CollectionService {
-  static READ_URL: string = '/api/collections';
+  static READ_URL: string = `${environment.api.urlPrefix}/api/collections`;
   static MAX_RECORDS: number = 100;
   static DEFAULT_PAGE_SIZE: number = 20;
 
@@ -18,7 +19,7 @@ export class CollectionService {
   }
 
   getItemCollection(identifier: string): Observable<Collection> {
-    const url = `/api/items/${identifier}/collection`;
+    const url = `${environment.api.urlPrefix}/api/items/${identifier}/collection`;
     return this.http.get<Collection>(url);
   }
 

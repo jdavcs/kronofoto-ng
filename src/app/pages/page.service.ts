@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Page } from './page';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class PageService {
-  static READ_URL: string = '/api/page';
+  static READ_URL: string = `${environment.api.urlPrefix}/api/page`;
 
   constructor(private http: HttpClient) {} 
 

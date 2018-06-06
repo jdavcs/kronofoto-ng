@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Donor } from './donor';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class DonorService {
-  static READ_URL: string = '/api/alldonors';
+  static READ_URL: string = `${environment.api.urlPrefix}/api/alldonors`;
   static MAX_RECORDS: number = 1000; //1000: not a typo: this will be just a list
   static DEFAULT_PAGE_SIZE: number = 1000;
 

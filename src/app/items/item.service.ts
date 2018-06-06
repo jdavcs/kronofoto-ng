@@ -4,10 +4,11 @@ import { Observable } from 'rxjs/Observable';
 
 import { Item } from './item';
 import { ItemMetadata } from './item-metadata';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ItemService {
-  static READ_URL: string = '/api/items';
+  static READ_URL: string = `${environment.api.urlPrefix}/api/items`;
   static MAX_RECORDS: number = 100;
   static DEFAULT_PAGE_SIZE: number = 20;
 
