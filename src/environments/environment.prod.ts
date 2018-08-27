@@ -31,6 +31,6 @@ export const environment = {
     pathToOriginal: '/originals/'
   },
   api: {
-    urlPrefix: '/kronofoto';
+    urlPrefix: '/kronofoto'
   }
 };
