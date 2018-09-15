@@ -26,35 +26,32 @@ export class CollectionListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParamMap
       .switchMap( (qParams: ParamMap) => {
-        const [offset, limit] = this.getPagingParams(qParams);
-        return this.collectionService.getCollections(offset, limit);
+        const [pageNumber, pageSize] = this.getPagingParams(qParams);
+        return this.collectionService.getCollections(pageNumber, pageSize);
       })
       .subscribe( data => {
-        this.loadPaginationData(data.headers);
-        this.displayData(data.body);
+        this.loadPaginationData(data.body['pagination']);
+        this.displayData(data.body['results']);
       });
   }
 
   //TODO this should move to a superclass.
   getPagingParams(queryParams: ParamMap) {
-    const pageSize = +queryParams.get('pagesize');
     const pageNumber = +queryParams.get('page') || 1;
-    //API expects offset + limit
-    const offset: number = (pageNumber - 1) * pageSize;
-    const limit: number = pageSize;
-    return Array(offset, limit);
+    const pageSize = +queryParams.get('pagesize');
+    return Array(pageNumber, pageSize);
   }
 
   //TODO this should move to a superclass.
-  loadPaginationData(headers) {
+  loadPaginationData(data) {
     //TODO: add exception handling (there's no default values for total records)
-    const totalRecords   = parseInt(headers.get(environment.pagination.headers.totalRecords));
-    const pageSize       = parseInt(headers.get(environment.pagination.headers.pageSize));
-    const totalPages     = parseInt(headers.get(environment.pagination.headers.totalPages));
-    const firstRecord    = parseInt(headers.get(environment.pagination.headers.firstRecord));
-    const lastRecord     = parseInt(headers.get(environment.pagination.headers.lastRecord));
-    const currPageNumber = parseInt(headers.get(environment.pagination.headers.currentPageNumber));
-    const currPageSize   = parseInt(headers.get(environment.pagination.headers.currentPageSize));
+    const totalRecords   = parseInt(data.count);
+    const pageSize       = parseInt(data.pageSize);
+    const totalPages     = parseInt(data.totalPages);
+    const firstRecord    = parseInt(data.startIndex);
+    const lastRecord     = parseInt(data.endIndex);
+    const currPageNumber = parseInt(data.currentPage);
+    const currPageSize   = lastRecord - firstRecord;
 
     this.pData = new PaginationData(
       totalRecords, pageSize, totalPages, firstRecord, lastRecord, currPageNumber, currPageSize);
@@ -65,6 +62,7 @@ export class CollectionListComponent implements OnInit {
     const columns: number = environment.collections.columns;
     const rows = Math.ceil(this.pData.currentPageSize / columns);
     this.records = [];
+
     for (let i=0; i<rows; i++) {
       let cols = [];
       this.records.push(cols);

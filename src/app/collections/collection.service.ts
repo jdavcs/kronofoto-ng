@@ -24,20 +24,19 @@ export class CollectionService {
   }
 
   getCollections(
-    offset: number = 0, 
-    limit: number = CollectionService.DEFAULT_PAGE_SIZE
+    pageNumber: number = 1, 
+    pageSize: number = CollectionService.DEFAULT_PAGE_SIZE
   ): Observable<HttpResponse<Collection[]>> {
     let url = CollectionService.READ_URL;
 
     let params = new HttpParams();
-    params = params.append('offset', String(offset));
-    params = params.append('limit', String(limit));
+    params = params.append('page', String(pageNumber));
+    params = params.append('pagesize', String(pageSize));
     //add more params here
-
+    //
     return this.http.get<Collection[]>(url, {
       params: params,
-      observe: 'response' //because we need the headers returned by the API
+      observe: 'response' //because we may need the headers returned by the API
     });
   }
 }
-
